@@ -7,7 +7,7 @@ function onLoad() {
     console.log('Started loading');
 
     // World
-    world = generateWorld(window.screen.width, window.screen.height);
+    world = generateWorld(window.screen.width, window.screen.height, INITIAL_POPULATION_SIZE);
     console.log('Initial world:');
     console.log(world);
 

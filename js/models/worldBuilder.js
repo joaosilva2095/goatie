@@ -1,10 +1,10 @@
 /**
  * Generate the world
  */
-function generateWorld(width, height) {
+function generateWorld(width, height, populationSize) {
     var world = new World(width, height);
-    generateGoats(world, INITIAL_POPULATION_SIZE);
     generateCells(world);
+    generateGoats(world, populationSize);
 
     return world;
 }
@@ -15,15 +15,38 @@ function generateWorld(width, height) {
  * @param populationSize size of the initial population
  */
 function generateGoats(world, populationSize) {
-    var x, y, gender;
+    var goat, x, y, gender;
     var xOffset = INITIAL_GOAT_SIZE,
         yOffset = INITIAL_GOAT_SIZE;
 
     for (var i = 0; i < populationSize; i++) {
+        lastCellID = 0;
+
         gender = Math.random() >= 0.5 ? 'M' : 'F';
         x = Math.floor(Math.random() * (world.width - (2 * xOffset) + 1)) + xOffset;
         y = Math.floor(Math.random() * (world.height - (2 * yOffset) + 1)) + yOffset;
-        world.goats.push(new Goat(x, y, gender));
+        goat = new Goat(x, y, gender);
+        initializeGoat(world, goat);
+        world.goats.push(goat);
+    }
+}
+
+/**
+ * Initialize a goat
+ * @param world world of the goat
+ * @param goat goat to be initialized
+ */
+function initializeGoat(world, goat) {
+    var x, y;
+    var size = world.factor / NUMBER_CELLS_FACTOR;
+
+    for (var i = 0; i < world.nrRows; i++) {
+        for (var j = 0; j < world.nrColumns; j++) {
+            x = j * size;
+            y = i * size;
+            var cell = new Cell(x, y, size, size, CellType.UNKNOWN, -1);
+            goat.knownMap.push(cell);
+        }
     }
 }
 

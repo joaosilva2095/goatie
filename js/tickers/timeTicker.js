@@ -53,11 +53,17 @@ function updateCells(elapsedTime) {
  * @param elapsedTime elapsed time since last update
  */
 function updateGoats(elapsedTime) {
-    var goat, goatCell;
+    var goat, goatCell, goatKnowledgeCell;
 
     for (var i = 0; i < this.world.goats.length; i++) {
         goat = this.world.goats[i];
         goatCell = this.world.getCell(goat.x, goat.y);
+
+        // Update knowledge
+        goatKnowledgeCell = goat.getKnowledgeCell(goatCell.id);
+        goatKnowledgeCell.cellType = goatCell.cellType;
+        goatKnowledgeCell.food = goatCell.food;
+
         this.updateGoatCoordinates(elapsedTime, goat, goatCell);
         this.updateGoatFood(elapsedTime, goat, goatCell);
         this.checkDead(goat);

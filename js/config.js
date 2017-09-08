@@ -7,7 +7,7 @@ var PENALTY_PROBABILITY = 0.9;
 var TICK_TIME = 3000; // Milliseconds per tick
 
 // Entities configurations
-var INITIAL_POPULATION_SIZE = 100;
+var INITIAL_POPULATION_SIZE = 25;
 var INITIAL_GOAT_SIZE = 10;
 var INITIAL_GOAT_FOOD = 100;
 var CELL_MAXIMUM_FOOD = 200; // Maximum food units

@@ -5,6 +5,7 @@ var lastCellID = 0; // Last cell ID
 
 // Cell Types
 var CellType = {
+    UNKNOWN: 0,
     PLAINS: 1,
     WATER: 2,
     MOUNTAIN: 3

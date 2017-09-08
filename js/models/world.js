@@ -20,7 +20,8 @@ function World(width, height) {
  * @param y y coordinate
  */
 function getCell(x, y) {
-    return this.cells[Math.floor(x / this.factor * NUMBER_CELLS_FACTOR) + Math.floor(y / this.factor * NUMBER_CELLS_FACTOR) * this.nrColumns];
+    var index = Math.floor(x / this.factor * NUMBER_CELLS_FACTOR) + Math.floor(y / this.factor * NUMBER_CELLS_FACTOR) * this.nrColumns;
+    return this.cells[index];
 }
 
 /**
