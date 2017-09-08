@@ -2,6 +2,7 @@ World.prototype.constructor = World;
 World.prototype.generateWorld = generateWorld;
 World.prototype.generateGoats = generateGoats;
 World.prototype.generateCells = generateCells;
+World.prototype.tick = tick;
 
 function World(width, height) {
     this.width = width;
@@ -51,6 +52,18 @@ function generateCells() {
             y = i * size;
             this.cells.push(new Cell(x, y, size, size));
         }
+    }
+}
+
+/**
+ * Tick the world
+ */
+function tick() {
+    var goat;
+
+    for(var i = 0; i < this.goats.length; i++) {
+        goat = this.goats[i];
+        goat.x += 2;
     }
 }
 

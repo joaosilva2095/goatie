@@ -1,18 +1,8 @@
 View.prototype.constructor = View;
 View.prototype.resizeCanvas = resizeCanvas;
+View.prototype.drawWorld = drawWorld;
 View.prototype.drawCell = drawCell;
 View.prototype.drawGoat = drawGoat;
-
-function test() {
-    console.log(world);
-    for(var i = 0; i < world.cells.length; i++) {
-        view.drawCell(world.cells[i]);
-    }
-
-    for(var i = 0; i < world.goats.length; i++) {
-        view.drawGoat(world.goats[i]);
-    }
-}
 
 function View(world) {
     this.canvas = document.getElementById("board");
@@ -30,7 +20,22 @@ function resizeCanvas() {
     this.canvas.width = document.body.clientWidth;
     this.canvas.height = document.body.clientHeight;
 
-    test();
+    this.drawWorld();
+}
+
+/**
+ * Draw the world
+ */
+function drawWorld() {
+    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+    for(var i = 0; i < world.cells.length; i++) {
+        view.drawCell(world.cells[i]);
+    }
+
+    for(i = 0; i < world.goats.length; i++) {
+        view.drawGoat(world.goats[i]);
+    }
 }
 
 /**
