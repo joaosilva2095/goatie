@@ -63,7 +63,8 @@ function tick() {
 
     for(var i = 0; i < this.goats.length; i++) {
         goat = this.goats[i];
-        goat.x += 2;
+        goat.x += Math.random() * 10 - 5;
+        goat.y += Math.random() * 10 - 5;
     }
 }
 
