@@ -1,5 +1,6 @@
 WorldController.prototype.constructor = WorldController;
 WorldController.prototype.updateEntities = updateEntities;
+WorldController.prototype.updateCells = updateCells;
 WorldController.prototype.updateGoats = updateGoats;
 
 function WorldController(world, view) {
@@ -18,11 +19,30 @@ function updateEntities(timestamp) {
 
     var elapsedTime = (timestamp - this.lastTimestamp) / 1000;
 
+    this.updateCells(elapsedTime);
     this.updateGoats(elapsedTime);
+
     this.view.drawWorld();
 
     this.lastTimestamp = timestamp;
     window.requestAnimationFrame(this.updateEntities.bind(this));
+}
+
+/**
+ * Update the cells food
+ * @param elapsedTime elapsed time since last update
+ */
+function updateCells(elapsedTime) {
+    var cell;
+
+    for (var i = 0; i < this.world.cells.length; i++) {
+        cell = this.world.cells[i];
+
+        cell.food += cell.growthFactor * elapsedTime;
+        if(cell.food >= MAXIMUM_FOOD) {
+            cell.food = MAXIMUM_FOOD;
+        }
+    }
 }
 
 /**

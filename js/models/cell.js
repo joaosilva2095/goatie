@@ -3,23 +3,63 @@ Cell.prototype.getColor = getColor;
 
 var lastID = 0; // Last cell ID
 
-function Cell(x, y, width, height, speedFactor, food) {
+// Cell Types
+var CellType = {
+    PLAINS: 1,
+    WATER: 2,
+    MOUNTAIN: 3
+};
+
+function Cell(x, y, width, height, cellType, food) {
     this.id = ++lastID;
     this.x = x;
     this.y = y;
     this.width = width;
     this.height = height;
-    this.speedFactor = speedFactor || 1;
+    this.cellType = cellType;
     this.food = food || 0;
+
+    switch (this.cellType) {
+        case CellType.PLAINS:
+            this.speedFactor = DEFAULT_PLAINS_SPEED_FACTOR;
+            this.growthFactor = Math.random() + 0.1;
+            break;
+        case CellType.WATER:
+            this.speedFactor = DEFAULT_WATER_SPEED_FACTOR;
+            this.growthFactor = 0;
+            this.food = 0;
+            break;
+        case CellType.MOUNTAIN:
+            this.speedFactor = DEFAULT_MOUNTAIN_SPEED_FACTOR;
+            this.growthFactor = Math.random() * 2 + 0.2;
+            break;
+    }
+
 }
 
 /**
  * Get the color of a goat
  */
 function getColor() {
-    var r = Math.floor((this.speedFactor - 0.5) * (0 - 194) + 194);
-    var g = Math.floor((this.speedFactor - 0.5) * (128 - 178) + 178);
-    var b = Math.floor((this.speedFactor - 0.5) * (0 - 128) + 128);
+    var r, g, b;
+    switch (this.cellType) {
+        case CellType.PLAINS:
+            r = Math.floor((this.food / MAXIMUM_FOOD) * (69 - 220) + 220);
+            g = Math.floor((this.food / MAXIMUM_FOOD) * (182 - 227) + 227);
+            b = Math.floor((this.food / MAXIMUM_FOOD) * (73 - 91) + 91);
+            break;
+        case CellType.WATER:
+            r = 64;
+            g = 164;
+            b = 223;
+            break;
+        case CellType.MOUNTAIN:
+            r = Math.floor((this.food / MAXIMUM_FOOD) * (44 - 90) + 90);
+            g = Math.floor((this.food / MAXIMUM_FOOD) * (119 - 63) + 63);
+            b = Math.floor((this.food / MAXIMUM_FOOD) * (68 - 55) + 55);
+            break;
+    }
+
 
     return "rgba(" + r + ", " + g + ", " + b + ", 255)";
 }
