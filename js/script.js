@@ -3,14 +3,6 @@ var canvas,
     canvasHeight,
     context;
 
-function test() {
-    var goatM = new Goat(25, 25, 'M'),
-        goatF = new Goat(78, 100, 'F');
-
-    drawGoat(goatM);
-    drawGoat(goatF);
-}
-
 /**
  * On loading
  */
