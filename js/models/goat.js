@@ -7,6 +7,8 @@ function Goat(x, y, gender, size, food) {
     this.id = ++lastID;
     this.x = x;
     this.y = y;
+    this.targetX = null;
+    this.targetY = null;
     this.gender = gender;
     this.size = size | INITIAL_GOAT_SIZE;
     this.food = food | INITIAL_GOAT_FOOD;

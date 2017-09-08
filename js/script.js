@@ -20,6 +20,12 @@ function onLoad() {
     // Timer
     var ticker = new Ticker();
     ticker.start();
+    window.requestAnimationFrame(view.drawWorld.bind(view));
+
+    // Run the world
+    while(world.isRunning) {
+        world.run();
+    }
 
     console.log('Finished loading');
 }

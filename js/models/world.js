@@ -2,13 +2,14 @@ World.prototype.constructor = World;
 World.prototype.generateWorld = generateWorld;
 World.prototype.generateGoats = generateGoats;
 World.prototype.generateCells = generateCells;
-World.prototype.tick = tick;
+World.prototype.run = run;
 
 function World(width, height) {
     this.width = width;
     this.height = height;
     this.goats = [];
     this.cells = [];
+    this.isRunning = false;
 }
 
 /**
@@ -56,9 +57,9 @@ function generateCells() {
 }
 
 /**
- * Tick the world
+ * Run the world
  */
-function tick() {
+function run() {
     var goat;
 
     for(var i = 0; i < this.goats.length; i++) {

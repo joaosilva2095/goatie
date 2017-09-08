@@ -32,6 +32,5 @@ function stop() {
  * Tick
  */
 function tick() {
-    this.world.tick();
-    this.view.drawWorld();
+    this.world.run();
 }
