@@ -16,7 +16,7 @@ var CELL_MAXIMUM_FOOD = 200; // Maximum food units
 var DEFAULT_GOAT_SPEED = 40; // Pixels per second
 var DEFAULT_GOAT_EAT_SPEED = 80; // Units of food per second
 var DEFAULT_GOAT_HUNGRY_SPEED = 20; // Units of food that decrease per second
-var DEFAULT_GOAT_MAXIMUM_FOOD = 250; // Goat default maximum food
+var DEFAULT_GOAT_MAXIMUM_FOOD = 400; // Goat default maximum food
 
 // Cells defaults
 var DEFAULT_PLAINS_SPEED_FACTOR = 1; // Goat speed multiplier

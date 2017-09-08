@@ -1,6 +1,6 @@
 World.prototype.constructor = World;
 World.prototype.getCell = getCell;
-World.prototype.updateIntentions = updateIntentions;
+World.prototype.updateDesires = updateDesires;
 
 function World(width, height) {
     this.width = width;
@@ -27,13 +27,9 @@ function getCell(x, y) {
 /**
  * Run the world
  */
-function updateIntentions() {
-    var goat;
-
+function updateDesires() {
     for (var i = 0; i < this.goats.length; i++) {
-        goat = this.goats[i];
-        goat.targetX = Math.floor(Math.random() * (this.width - (2 * INITIAL_GOAT_SIZE) + 1)) + INITIAL_GOAT_SIZE;
-        goat.targetY = Math.floor(Math.random() * (this.height - (2 * INITIAL_GOAT_SIZE) + 1)) + INITIAL_GOAT_SIZE;
+        this.goats[i].updateDesires();
     }
 }
 

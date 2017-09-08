@@ -26,13 +26,17 @@ function Goat(x, y, gender, size, food, speed, eatSpeed, hungrySpeed, maximumFoo
 
     // Desires
     this.eatingDesire = 0;
-    this.matingDesire = 0;
+    this.exploreDesire = 0;
 }
 
 /**
  * Get the color of a goat
  */
 function getColor() {
+    if (this.id === 1) {
+        return 'black';
+    }
+
     if (this.gender === 'M') {
         return 'blue';
     } else if (this.gender === 'F') {
@@ -52,5 +56,14 @@ function getKnowledgeCell(cellID) {
  * Update the goat desires
  */
 function updateDesires() {
+    this.eatingDesire = 1.437465634 * Math.exp(-0.107170305 * (this.food / this.hungrySpeed));
+    if(this.eatingDesire > 1) {
+        this.eatingDesire = 1;
+    }
 
+    if(this.id === 1)
+        console.log(this.eatingDesire);
+
+    this.targetX = Math.floor(Math.random() * 1920);
+    this.targetY = Math.floor(Math.random() * 1080);
 }
