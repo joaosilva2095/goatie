@@ -8,8 +8,8 @@ function Goat(x, y, gender, size, food) {
     this.x = x;
     this.y = y;
     this.gender = gender;
-    this.size = size | 10;
-    this.food = food | 100;
+    this.size = size | INITIAL_GOAT_SIZE;
+    this.food = food | INITIAL_GOAT_FOOD;
 }
 
 /**
