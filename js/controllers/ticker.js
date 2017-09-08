@@ -12,6 +12,7 @@ function Ticker(world) {
  * Start the timer
  */
 function start() {
+    this.tick();
     this.intervalID = setInterval(this.tick, TICK_TIME);
 }
 
