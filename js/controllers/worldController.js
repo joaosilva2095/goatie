@@ -2,6 +2,9 @@ WorldController.prototype.constructor = WorldController;
 WorldController.prototype.updateEntities = updateEntities;
 WorldController.prototype.updateCells = updateCells;
 WorldController.prototype.updateGoats = updateGoats;
+WorldController.prototype.updateGoatCoordinates = updateGoatCoordinates;
+WorldController.prototype.updateGoatFood = updateGoatFood;
+WorldController.prototype.checkDead = checkDead;
 
 function WorldController(world, view) {
     this.world = world;
@@ -55,8 +58,9 @@ function updateGoats(elapsedTime) {
     for (var i = 0; i < this.world.goats.length; i++) {
         goat = this.world.goats[i];
         goatCell = this.world.getCell(goat.x, goat.y);
-        updateGoatCoordinates(elapsedTime, goat, goatCell);
-        updateGoatFood(elapsedTime, goat, goatCell);
+        this.updateGoatCoordinates(elapsedTime, goat, goatCell);
+        this.updateGoatFood(elapsedTime, goat, goatCell);
+        this.checkDead(goat);
     }
 }
 
@@ -125,5 +129,15 @@ function updateGoatFood(elapsedTime, goat, goatCell) {
     } else {
         goatCell.food -= goatMouthSpace;
         goat.food += goatMouthSpace;
+    }
+}
+
+/**
+ * Check if goat dies
+ * @param goat goat to check
+ */
+function checkDead(goat) {
+    if (goat.food <= 0) {
+        this.world.goats.splice(this.world.goats.indexOf(goat), 1);
     }
 }
