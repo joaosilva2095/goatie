@@ -156,7 +156,7 @@ function getProbabilityBoth(leftBiomeProb, upBiomeProb, leftCell, upCell) {
     currentProb[2] = (upBiomeProb[2] + leftBiomeProb[2]) / 2;
 
     if (leftCell.cellType === upCell.cellType) {
-        currentProb[leftCell.cellType - 1] = 0.95;
+        currentProb[leftCell.cellType - 1] = 1;
         switch (leftCell.cellType) {
             case CellType.PLAINS:
                 currentProb[1] = (1 - currentProb[0]) / 2;
@@ -173,15 +173,15 @@ function getProbabilityBoth(leftBiomeProb, upBiomeProb, leftCell, upCell) {
         }
     } else {
         if(leftCell.cellType !== CellType.PLAINS && upCell.cellType !== CellType.PLAINS){
-            currentProb[0] = 0.05;
+            currentProb[0] = 0;
             currentProb[1] = (1 - currentProb[0]) / 2;
             currentProb[2] = (1 - currentProb[0]) / 2;
         } else if(leftCell.cellType !== CellType.WATER && upCell.cellType !== CellType.WATER){
-            currentProb[1] = 0.05;
+            currentProb[1] = 0;
             currentProb[0] = (1 - currentProb[1]) / 2;
             currentProb[2] = (1 - currentProb[1]) / 2;
         } else if(leftCell.cellType !== CellType.MOUNTAIN && upCell.cellType !== CellType.MOUNTAIN){
-            currentProb[2] = 0.05;
+            currentProb[2] = 0;
             currentProb[0] = (1 - currentProb[2]) / 2;
             currentProb[1] = (1 - currentProb[2]) / 2;
         }
