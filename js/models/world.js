@@ -60,28 +60,29 @@ function generateCells() {
 
 
     var probabilityMatrix = [], upCell, leftCell, leftBiomeProb, upBiomeProb,
-        currentProb, roll;
+        currentProb;
     for (var i = 0; i < this.nrRows; i++) {
         for (var j = 0; j < this.nrColumns; j++) {
-            food = Math.random() * MAXIMUM_FOOD;
-            
-            upBiomeProb = probabilityMatrix[i - 1 * this.nrColumns + j];
+            //food = Math.random() * MAXIMUM_FOOD;
+            food = 0;
+
+            upBiomeProb = probabilityMatrix[(i - 1) * this.nrColumns + j];
             leftBiomeProb = probabilityMatrix[i * this.nrColumns + j - 1];
-            upCell = this.cells[i - 1 * this.nrColumns + j];
+            upCell = this.cells[(i - 1) * this.nrColumns + j];
             leftCell = this.cells[i * this.nrColumns + j - 1];
 
             if (!leftCell && !upCell) {
                 currentProb = getProbabilityNone();
             } else if (leftCell && !upCell) {
-                currentProb = getProbabilityLeft(leftBiomeProb);
+                currentProb = getProbabilityLeft(leftBiomeProb, leftCell);
             } else if (!leftCell && upCell) {
-                currentProb = getProbabilityUp(upBiomeProb);
+                currentProb = getProbabilityUp(upBiomeProb, upCell);
             } else {
-                currentProb = getProbabilityBoth(leftBiomeProb, upBiomeProb);
+                currentProb = getProbabilityBoth(leftBiomeProb, upBiomeProb, leftCell, upCell);
             }
-            
+
             probabilityMatrix.push(currentProb);
-            
+
             cellType = rollBiome(currentProb);
             x = j * size;
             y = i * size;
@@ -123,56 +124,129 @@ function gcd(a, b) {
 }
 
 function getProbabilityNone() {
-    return calculateProb([1, 0, 0]);
+    return [1, 0, 0];
 }
 
-function getProbabilityLeft(leftBiomeProb) {
+function getProbabilityLeft(leftBiomeProb, leftCell) {
     var currentProb = [];
     currentProb[0] = leftBiomeProb[0];
     currentProb[1] = leftBiomeProb[1];
     currentProb[2] = leftBiomeProb[2];
+
+    currentProb = swapProbabilities(currentProb, leftCell.cellType);
+
     return calculateProb(currentProb);
 }
 
-function getProbabilityUp(upBiomeProb) {
+function getProbabilityUp(upBiomeProb, upCell) {
     var currentProb = [];
     currentProb[0] = upBiomeProb[0];
     currentProb[1] = upBiomeProb[1];
     currentProb[2] = upBiomeProb[2];
+
+    currentProb = swapProbabilities(currentProb, upCell.cellType);
+
     return calculateProb(currentProb);
 }
 
-function getProbabilityBoth(leftBiomeProb, upBiomeProb) {
+function getProbabilityBoth(leftBiomeProb, upBiomeProb, leftCell, upCell) {
     var currentProb = [];
     currentProb[0] = (upBiomeProb[0] + leftBiomeProb[0]) / 2;
     currentProb[1] = (upBiomeProb[1] + leftBiomeProb[1]) / 2;
     currentProb[2] = (upBiomeProb[2] + leftBiomeProb[2]) / 2;
 
+    if (leftCell.cellType === upCell.cellType) {
+        currentProb[leftCell.cellType - 1] = 0.95;
+        switch (leftCell.cellType) {
+            case CellType.PLAINS:
+                currentProb[1] = (1 - currentProb[0]) / 2;
+                currentProb[2] = (1 - currentProb[0]) / 2;
+                break;
+            case CellType.WATER:
+                currentProb[0] = (1 - currentProb[1]) / 2;
+                currentProb[2] = (1 - currentProb[1]) / 2;
+                break;
+            case CellType.MOUNTAIN:
+                currentProb[0] = (1 - currentProb[2]) / 2;
+                currentProb[1] = (1 - currentProb[2]) / 2;
+                break;
+        }
+    } else {
+        if(leftCell.cellType !== CellType.PLAINS && upCell.cellType !== CellType.PLAINS){
+            currentProb[0] = 0.05;
+            currentProb[1] = (1 - currentProb[0]) / 2;
+            currentProb[2] = (1 - currentProb[0]) / 2;
+        } else if(leftCell.cellType !== CellType.WATER && upCell.cellType !== CellType.WATER){
+            currentProb[1] = 0.05;
+            currentProb[0] = (1 - currentProb[1]) / 2;
+            currentProb[2] = (1 - currentProb[1]) / 2;
+        } else if(leftCell.cellType !== CellType.MOUNTAIN && upCell.cellType !== CellType.MOUNTAIN){
+            currentProb[2] = 0.05;
+            currentProb[0] = (1 - currentProb[2]) / 2;
+            currentProb[1] = (1 - currentProb[2]) / 2;
+        }
+    }
+
+
     return calculateProb(currentProb);
+}
+
+function swapProbabilities(probability, cellType) {
+    switch (cellType) {
+        case CellType.PLAINS:
+            temp = probability[0];
+            if (temp > probability[1] && temp > probability[2])
+                break;
+            if (probability[1] > probability[2]) {
+                probability = [probability[1], probability[0], probability[2]];
+            } else {
+                probability = [probability[2], probability[1], probability[0]];
+            }
+            break;
+        case CellType.WATER:
+            temp = probability[1];
+            if (temp > probability[0] && temp > probability[2])
+                break;
+            if (probability[0] > probability[2]) {
+                probability = [probability[1], probability[0], probability[2]];
+            } else {
+                probability = [probability[0], probability[2], probability[1]];
+            }
+            break;
+        case CellType.MOUNTAIN:
+            temp = probability[2];
+            if (temp > probability[0] && temp > probability[1])
+                break;
+            if (probability[0] > probability[1]) {
+                probability = [probability[2], probability[1], probability[0]];
+            } else {
+                probability = [probability[0], probability[2], probability[1]];
+            }
+            break;
+    }
+    return probability;
 }
 
 function calculateProb(currentProb) {
     var temp;
-    if (currentProb[0] > 0.6) {
-        temp = currentProb[0] - 0.6;
+    if (currentProb[0] > PENALTY_PROBABILITY) {
+        temp = currentProb[0] - PENALTY_PROBABILITY;
         temp /= 2;
         currentProb[0] -= temp;
         currentProb[1] += temp / 2;
         currentProb[2] += temp / 2;
-    } else if (currentProb[1] > 0.6) {
-        temp = currentProb[1];
-        currentProb[1] = 0.6;
-        temp -= 0.6;
+    } else if (currentProb[1] > PENALTY_PROBABILITY) {
+        temp = currentProb[1] - PENALTY_PROBABILITY;
         temp /= 2;
-        currentProb[0] += temp;
-        currentProb[2] += temp;
-    } else if (currentProb[2] > 0.6) {
-        temp = currentProb[2];
-        currentProb[2] = 0.6;
-        temp -= 0.6;
+        currentProb[1] -= temp;
+        currentProb[0] += temp / 2;
+        currentProb[2] += temp / 2;
+    } else if (currentProb[2] > PENALTY_PROBABILITY) {
+        temp = currentProb[2] - PENALTY_PROBABILITY;
         temp /= 2;
-        currentProb[0] += temp;
-        currentProb[1] += temp;
+        currentProb[2] -= temp;
+        currentProb[0] += temp / 2;
+        currentProb[1] += temp / 2;
     }
 
     return currentProb;
