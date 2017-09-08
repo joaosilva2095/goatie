@@ -4,6 +4,12 @@ World.prototype.generateGoats = generateGoats;
 World.prototype.generateCells = generateCells;
 World.prototype.getCell = getCell;
 World.prototype.run = run;
+World.prototype.getProbabilityNone = getProbabilityNone;
+World.prototype.getProbabilityLeft = getProbabilityLeft;
+World.prototype.getProbabilityUp = getProbabilityUp;
+World.prototype.getProbabilityBoth = getProbabilityBoth;
+World.prototype.calculateProb = calculateProb;
+World.prototype.rollBiome = rollBiome;
 
 function World(width, height) {
     this.width = width;
@@ -53,12 +59,32 @@ function generateCells() {
     this.nrColumns = this.width / size;
 
 
+    var probabilityMatrix = [], upCell, leftCell, leftBiomeProb, upBiomeProb,
+        currentProb, roll;
     for (var i = 0; i < this.nrRows; i++) {
         for (var j = 0; j < this.nrColumns; j++) {
+            food = Math.random() * MAXIMUM_FOOD;
+            
+            upBiomeProb = probabilityMatrix[i - 1 * this.nrColumns + j];
+            leftBiomeProb = probabilityMatrix[i * this.nrColumns + j - 1];
+            upCell = this.cells[i - 1 * this.nrColumns + j];
+            leftCell = this.cells[i * this.nrColumns + j - 1];
+
+            if (!leftCell && !upCell) {
+                currentProb = getProbabilityNone();
+            } else if (leftCell && !upCell) {
+                currentProb = getProbabilityLeft(leftBiomeProb);
+            } else if (!leftCell && upCell) {
+                currentProb = getProbabilityUp(upBiomeProb);
+            } else {
+                currentProb = getProbabilityBoth(leftBiomeProb, upBiomeProb);
+            }
+            
+            probabilityMatrix.push(currentProb);
+            
+            cellType = rollBiome(currentProb);
             x = j * size;
             y = i * size;
-            cellType = Math.floor(Math.random() * 3 + 1);
-            food = Math.random() * MAXIMUM_FOOD;
             this.cells.push(new Cell(x, y, size, size, cellType, food));
         }
     }
@@ -94,4 +120,72 @@ function run() {
  */
 function gcd(a, b) {
     return (b === 0) ? a : gcd(b, a % b);
+}
+
+function getProbabilityNone() {
+    return calculateProb([1, 0, 0]);
+}
+
+function getProbabilityLeft(leftBiomeProb) {
+    var currentProb = [];
+    currentProb[0] = leftBiomeProb[0];
+    currentProb[1] = leftBiomeProb[1];
+    currentProb[2] = leftBiomeProb[2];
+    return calculateProb(currentProb);
+}
+
+function getProbabilityUp(upBiomeProb) {
+    var currentProb = [];
+    currentProb[0] = upBiomeProb[0];
+    currentProb[1] = upBiomeProb[1];
+    currentProb[2] = upBiomeProb[2];
+    return calculateProb(currentProb);
+}
+
+function getProbabilityBoth(leftBiomeProb, upBiomeProb) {
+    var currentProb = [];
+    currentProb[0] = (upBiomeProb[0] + leftBiomeProb[0]) / 2;
+    currentProb[1] = (upBiomeProb[1] + leftBiomeProb[1]) / 2;
+    currentProb[2] = (upBiomeProb[2] + leftBiomeProb[2]) / 2;
+
+    return calculateProb(currentProb);
+}
+
+function calculateProb(currentProb) {
+    var temp;
+    if (currentProb[0] > 0.6) {
+        temp = currentProb[0] - 0.6;
+        temp /= 2;
+        currentProb[0] -= temp;
+        currentProb[1] += temp / 2;
+        currentProb[2] += temp / 2;
+    } else if (currentProb[1] > 0.6) {
+        temp = currentProb[1];
+        currentProb[1] = 0.6;
+        temp -= 0.6;
+        temp /= 2;
+        currentProb[0] += temp;
+        currentProb[2] += temp;
+    } else if (currentProb[2] > 0.6) {
+        temp = currentProb[2];
+        currentProb[2] = 0.6;
+        temp -= 0.6;
+        temp /= 2;
+        currentProb[0] += temp;
+        currentProb[1] += temp;
+    }
+
+    return currentProb;
+}
+
+function rollBiome(currentProb) {
+    var roll = Math.random();
+
+    if (roll <= currentProb[0]) {
+        return 1;
+    } else if (roll <= currentProb[0] + currentProb[1]) {
+        return 2;
+    } else {
+        return 3;
+    }
 }
