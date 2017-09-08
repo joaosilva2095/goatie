@@ -21,8 +21,8 @@ function generateWorld() {
  */
 function generateGoats(populationSize) {
     var x, y, gender;
-    var xOffset = INITIAL_GOAT_SIZE / this.width,
-        yOffset = INITIAL_GOAT_SIZE / this.height;
+    var xOffset = INITIAL_GOAT_SIZE,
+        yOffset = INITIAL_GOAT_SIZE;
 
     for(var i = 0; i < populationSize; i++) {
         gender = Math.random() >= 0.5 ? 'M' : 'F';
