@@ -44,8 +44,7 @@ function generateCells(world) {
         currentProb;
     for (var i = 0; i < world.nrRows; i++) {
         for (var j = 0; j < world.nrColumns; j++) {
-            //food = Math.random() * MAXIMUM_FOOD;
-            food = 0;
+            food = Math.random() * CELL_MAXIMUM_FOOD;
 
             upBiomeProb = probabilityMatrix[(i - 1) * world.nrColumns + j];
             leftBiomeProb = probabilityMatrix[i * world.nrColumns + j - 1];
@@ -55,9 +54,9 @@ function generateCells(world) {
             if (!leftCell && !upCell) {
                 currentProb = getProbabilityNone();
             } else if (leftCell && !upCell) {
-                currentProb = getProbabilityLeft(leftBiomeProb, leftCell);
+                currentProb = getProbabilityOne(leftBiomeProb, leftCell);
             } else if (!leftCell && upCell) {
-                currentProb = getProbabilityUp(upBiomeProb, upCell);
+                currentProb = getProbabilityOne(upBiomeProb, upCell);
             } else {
                 currentProb = getProbabilityBoth(leftBiomeProb, upBiomeProb, leftCell, upCell);
             }
@@ -76,24 +75,13 @@ function getProbabilityNone() {
     return [1, 0, 0];
 }
 
-function getProbabilityLeft(leftBiomeProb, leftCell) {
+function getProbabilityOne(biomeProb, cell) {
     var currentProb = [];
-    currentProb[0] = leftBiomeProb[0];
-    currentProb[1] = leftBiomeProb[1];
-    currentProb[2] = leftBiomeProb[2];
+    currentProb[0] = biomeProb[0];
+    currentProb[1] = biomeProb[1];
+    currentProb[2] = biomeProb[2];
 
-    currentProb = swapProbabilities(currentProb, leftCell.cellType);
-
-    return calculateProb(currentProb);
-}
-
-function getProbabilityUp(upBiomeProb, upCell) {
-    var currentProb = [];
-    currentProb[0] = upBiomeProb[0];
-    currentProb[1] = upBiomeProb[1];
-    currentProb[2] = upBiomeProb[2];
-
-    currentProb = swapProbabilities(currentProb, upCell.cellType);
+    currentProb = swapProbabilities(currentProb, cell.cellType);
 
     return calculateProb(currentProb);
 }

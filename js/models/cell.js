@@ -44,9 +44,9 @@ function getColor() {
     var r, g, b;
     switch (this.cellType) {
         case CellType.PLAINS:
-            r = Math.floor((this.food / MAXIMUM_FOOD) * (69 - 220) + 220);
-            g = Math.floor((this.food / MAXIMUM_FOOD) * (182 - 227) + 227);
-            b = Math.floor((this.food / MAXIMUM_FOOD) * (73 - 91) + 91);
+            r = Math.floor((this.food / CELL_MAXIMUM_FOOD) * (69 - 220) + 220);
+            g = Math.floor((this.food / CELL_MAXIMUM_FOOD) * (182 - 227) + 227);
+            b = Math.floor((this.food / CELL_MAXIMUM_FOOD) * (73 - 91) + 91);
             break;
         case CellType.WATER:
             r = 64;
@@ -54,9 +54,9 @@ function getColor() {
             b = 223;
             break;
         case CellType.MOUNTAIN:
-            r = Math.floor((this.food / MAXIMUM_FOOD) * (44 - 90) + 90);
-            g = Math.floor((this.food / MAXIMUM_FOOD) * (119 - 63) + 63);
-            b = Math.floor((this.food / MAXIMUM_FOOD) * (68 - 55) + 55);
+            r = Math.floor((this.food / CELL_MAXIMUM_FOOD) * (44 - 90) + 90);
+            g = Math.floor((this.food / CELL_MAXIMUM_FOOD) * (119 - 63) + 63);
+            b = Math.floor((this.food / CELL_MAXIMUM_FOOD) * (68 - 55) + 55);
             break;
     }
 
