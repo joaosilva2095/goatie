@@ -10,9 +10,9 @@ function Goat(x, y, gender, speed, size, food) {
     this.targetX = x;
     this.targetY = y;
     this.gender = gender;
-    this.speed = speed | INITIAL_GOAT_SPEED;
-    this.size = size | INITIAL_GOAT_SIZE;
-    this.food = food | INITIAL_GOAT_FOOD;
+    this.speed = speed || INITIAL_GOAT_SPEED;
+    this.size = size || INITIAL_GOAT_SIZE;
+    this.food = food || INITIAL_GOAT_FOOD;
 }
 
 /**

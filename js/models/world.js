@@ -2,6 +2,7 @@ World.prototype.constructor = World;
 World.prototype.generateWorld = generateWorld;
 World.prototype.generateGoats = generateGoats;
 World.prototype.generateCells = generateCells;
+World.prototype.getCell = getCell;
 World.prototype.run = run;
 
 function World(width, height) {
@@ -9,7 +10,11 @@ function World(width, height) {
     this.height = height;
     this.goats = [];
     this.cells = [];
+
+    this.nrColumns = 0;
+    this.nrRows = 0;
     this.isRunning = false;
+    this.factor = gcd(this.width, this.height);
 }
 
 /**
@@ -42,18 +47,27 @@ function generateGoats(populationSize) {
 function generateCells() {
     var x, y;
 
-    var factor = gcd(this.width, this.height),
-        size = factor / NUMBER_CELLS_FACTOR,
-        nrColumns = this.width / size,
-        nrRows = this.height / size;
+    var size = this.factor / NUMBER_CELLS_FACTOR;
 
-    for (var i = 0; i < nrRows; i++) {
-        for (var j = 0; j < nrColumns; j++) {
+    this.nrRows = this.height / size;
+    this.nrColumns = this.width / size;
+
+    for (var i = 0; i < this.nrRows; i++) {
+        for (var j = 0; j < this.nrColumns; j++) {
             x = j * size;
             y = i * size;
-            this.cells.push(new Cell(x, y, size, size));
+            this.cells.push(new Cell(x, y, size, size, Math.random() + 0.5));
         }
     }
+}
+
+/**
+ * Get the cell withing the coordinates
+ * @param x x coordinate
+ * @param y y coordinate
+ */
+function getCell(x, y) {
+    return this.cells[Math.floor(y / this.factor * this.nrRows) + Math.floor(x / this.factor * this.nrColumns)];;
 }
 
 /**
@@ -62,7 +76,7 @@ function generateCells() {
 function run() {
     var goat;
 
-    for(var i = 0; i < this.goats.length; i++) {
+    for (var i = 0; i < this.goats.length; i++) {
         goat = this.goats[i];
         goat.targetX = Math.floor(Math.random() * (this.width - (2 * INITIAL_GOAT_SIZE) + 1)) + INITIAL_GOAT_SIZE;
         goat.targetY = Math.floor(Math.random() * (this.height - (2 * INITIAL_GOAT_SIZE) + 1)) + INITIAL_GOAT_SIZE;
