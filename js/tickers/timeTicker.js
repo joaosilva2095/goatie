@@ -1,12 +1,12 @@
-WorldController.prototype.constructor = WorldController;
-WorldController.prototype.updateEntities = updateEntities;
-WorldController.prototype.updateCells = updateCells;
-WorldController.prototype.updateGoats = updateGoats;
-WorldController.prototype.updateGoatCoordinates = updateGoatCoordinates;
-WorldController.prototype.updateGoatFood = updateGoatFood;
-WorldController.prototype.checkDead = checkDead;
+TimeTicker.prototype.constructor = TimeTicker;
+TimeTicker.prototype.updateEntities = updateEntities;
+TimeTicker.prototype.updateCells = updateCells;
+TimeTicker.prototype.updateGoats = updateGoats;
+TimeTicker.prototype.updateGoatCoordinates = updateGoatCoordinates;
+TimeTicker.prototype.updateGoatFood = updateGoatFood;
+TimeTicker.prototype.checkDead = checkDead;
 
-function WorldController(world, view) {
+function TimeTicker(world, view) {
     this.world = world;
     this.view = view;
     this.lastTimestamp = null;

@@ -1,6 +1,6 @@
 World.prototype.constructor = World;
 World.prototype.getCell = getCell;
-World.prototype.run = run;
+World.prototype.updateIntentions = updateIntentions;
 
 function World(width, height) {
     this.width = width;
@@ -26,7 +26,7 @@ function getCell(x, y) {
 /**
  * Run the world
  */
-function run() {
+function updateIntentions() {
     var goat;
 
     for (var i = 0; i < this.goats.length; i++) {

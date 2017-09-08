@@ -1,9 +1,9 @@
-Ticker.prototype.constructor = Ticker;
-Ticker.prototype.start = start;
-Ticker.prototype.stop = stop;
-Ticker.prototype.tick = tick;
+AgentsTicker.prototype.constructor = AgentsTicker;
+AgentsTicker.prototype.start = start;
+AgentsTicker.prototype.stop = stop;
+AgentsTicker.prototype.tick = tick;
 
-function Ticker(world) {
+function AgentsTicker(world) {
     this.intervalID = -1;
     this.world = world;
 }
@@ -32,5 +32,5 @@ function stop() {
  * Tick
  */
 function tick() {
-    this.world.run();
+    this.world.updateIntentions();
 }

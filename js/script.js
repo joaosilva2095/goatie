@@ -16,13 +16,13 @@ function onLoad() {
     view.resizeCanvas();
     $(window).resize($.proxy(view.resizeCanvas, view));
 
-    // Timer
-    var ticker = new Ticker(world);
-    ticker.start();
+    // Agents Ticker
+    var agentsTicker = new AgentsTicker(world);
+    agentsTicker.start();
 
-    // World Controller
-    var worldController = new WorldController(world, view);
-    window.requestAnimationFrame(worldController.updateEntities.bind(worldController));
+    // Time Ticker
+    var timeTicker = new TimeTicker(world, view);
+    window.requestAnimationFrame(timeTicker.updateEntities.bind(timeTicker));
 
     console.log('Finished loading');
 }
