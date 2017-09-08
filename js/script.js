@@ -1,11 +1,5 @@
 var world, view;
 
-function test() {
-    for(var i = 0; i < world.goats.length; i++) {
-        view.drawGoat(world.goats[i]);
-    }
-}
-
 /**
  * On loading
  */
@@ -19,7 +13,6 @@ function onLoad() {
     view = new View(world);
     view.resizeCanvas();
     $(window).resize($.proxy(view.resizeCanvas, view));
-    test();
 
     console.log('Finished loading');
 }

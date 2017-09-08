@@ -4,7 +4,7 @@ Goat.prototype.getColor = getColor;
 var lastID = 0; // Last goat ID
 
 function Goat(x, y, gender, size, food) {
-    this.id = lastID++;
+    this.id = ++lastID;
     this.x = x;
     this.y = y;
     this.gender = gender;
