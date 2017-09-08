@@ -52,11 +52,11 @@ function generateCells() {
     this.nrRows = this.height / size;
     this.nrColumns = this.width / size;
 
+
     for (var i = 0; i < this.nrRows; i++) {
         for (var j = 0; j < this.nrColumns; j++) {
             x = j * size;
             y = i * size;
-            console.log(CellType.length);
             cellType = Math.floor(Math.random() * 3 + 1);
             food = Math.random() * MAXIMUM_FOOD;
             this.cells.push(new Cell(x, y, size, size, cellType, food));
@@ -70,7 +70,7 @@ function generateCells() {
  * @param y y coordinate
  */
 function getCell(x, y) {
-    return this.cells[Math.floor(y / this.factor * this.nrRows) + Math.floor(x / this.factor * this.nrColumns)];;
+    return this.cells[Math.floor(x / this.factor * NUMBER_CELLS_FACTOR) + Math.floor(y / this.factor * NUMBER_CELLS_FACTOR) * this.nrColumns];
 }
 
 /**

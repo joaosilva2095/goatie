@@ -1,10 +1,10 @@
 Goat.prototype.constructor = Goat;
 Goat.prototype.getColor = getColor;
 
-var lastID = 0; // Last goat ID
+var lastGoatID = 0; // Last goat ID
 
 function Goat(x, y, gender, speed, size, food) {
-    this.id = ++lastID;
+    this.id = ++lastGoatID;
     this.x = x;
     this.y = y;
     this.targetX = x;

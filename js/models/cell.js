@@ -1,7 +1,7 @@
 Cell.prototype.constructor = Cell;
 Cell.prototype.getColor = getColor;
 
-var lastID = 0; // Last cell ID
+var lastCellID = 0; // Last cell ID
 
 // Cell Types
 var CellType = {
@@ -11,7 +11,7 @@ var CellType = {
 };
 
 function Cell(x, y, width, height, cellType, food) {
-    this.id = ++lastID;
+    this.id = ++lastCellID;
     this.x = x;
     this.y = y;
     this.width = width;
