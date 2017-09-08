@@ -64,8 +64,8 @@ function run() {
 
     for(var i = 0; i < this.goats.length; i++) {
         goat = this.goats[i];
-        goat.x += Math.random() * 10 - 5;
-        goat.y += Math.random() * 10 - 5;
+        goat.targetX = Math.floor(Math.random() * (this.width - (2 * INITIAL_GOAT_SIZE) + 1)) + INITIAL_GOAT_SIZE;
+        goat.targetY = Math.floor(Math.random() * (this.height - (2 * INITIAL_GOAT_SIZE) + 1)) + INITIAL_GOAT_SIZE;
     }
 }
 

@@ -18,14 +18,12 @@ function onLoad() {
     $(window).resize($.proxy(view.resizeCanvas, view));
 
     // Timer
-    var ticker = new Ticker();
+    var ticker = new Ticker(world);
     ticker.start();
-    window.requestAnimationFrame(view.drawWorld.bind(view));
 
-    // Run the world
-    while(world.isRunning) {
-        world.run();
-    }
+    // World Controller
+    var worldController = new WorldController(world, view);
+    window.requestAnimationFrame(worldController.updateEntities.bind(worldController));
 
     console.log('Finished loading');
 }

@@ -5,7 +5,6 @@ View.prototype.drawCell = drawCell;
 View.prototype.drawGoat = drawGoat;
 
 function View(world) {
-    this.lastTimestamp = null;
     this.canvas = document.getElementById("board");
     this.context = this.canvas.getContext("2d");
     this.world = world;
@@ -27,11 +26,7 @@ function resizeCanvas() {
 /**
  * Draw the world
  */
-function drawWorld(timestamp) {
-    if(!this.lastTimestamp) {
-        this.lastTimestamp = timestamp;
-    }
-
+function drawWorld() {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
     for(var i = 0; i < world.cells.length; i++) {
@@ -41,9 +36,6 @@ function drawWorld(timestamp) {
     for(i = 0; i < world.goats.length; i++) {
         view.drawGoat(world.goats[i]);
     }
-
-    this.lastTimestamp = timestamp;
-    window.requestAnimationFrame(this.drawWorld.bind(this));
 }
 
 /**

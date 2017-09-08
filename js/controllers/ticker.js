@@ -3,10 +3,9 @@ Ticker.prototype.start = start;
 Ticker.prototype.stop = stop;
 Ticker.prototype.tick = tick;
 
-function Ticker(world, view) {
+function Ticker(world) {
     this.intervalID = -1;
     this.world = world;
-    this.view = view;
 }
 
 /**
