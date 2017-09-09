@@ -71,7 +71,8 @@ function updateDesires() {
 
     if (this.age < FERTILE_GOAT_AGE ||
         this.matingCooldown > 0 ||
-        this.eatingDesire === 1) {
+        this.eatingDesire === 1 ||
+        this.gender === 'F') {
         this.findMateDesire = 0;
         return;
     }
@@ -85,18 +86,14 @@ function updateDesires() {
 function calculateIntention() {
     if (this.exploreDesire > this.eatingDesire &&
         this.exploreDesire > this.findMateDesire) {
-        this.targetGoat = null;
         this.goExplore();
     } else if (this.eatingDesire > this.exploreDesire &&
         this.eatingDesire > this.findMateDesire) {
-        this.targetGoat = null;
         this.goEat();
     } else if (this.findMateDesire > this.exploreDesire &&
         this.findMateDesire > this.eatingDesire) {
-        this.targetCell = null;
         this.findMate();
     } else {
-        this.targetGoat = null;
         this.goEat();
     }
 }
@@ -191,6 +188,7 @@ function findMate() {
 
         if (goat.id === this.id ||
             goat.gender === this.gender ||
+            goat.age < FERTILE_GOAT_AGE ||
             goat.matingCooldown > 0) {
             continue;
         }

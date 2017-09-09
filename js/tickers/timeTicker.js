@@ -93,13 +93,14 @@ function tryBreed(goat, goatCell) {
 
     // Apply cooldowns
     if (goat.targetGoat.gender === 'F') {
-        goat.targetGoat.matingCooldown = FERTILITY_COOLDOWN;
+        goat.targetGoat.matingCooldown = Math.random() * (FERTILITY_AVERAGE_COOLDOWN * 2);
     } else {
-        goat.matingCooldown = FERTILITY_COOLDOWN;
+        goat.matingCooldown = Math.random() * (FERTILITY_AVERAGE_COOLDOWN * 2);
     }
 
     // Born baby
-    this.world.spawnBaby(goat, goat.targetGoat);
+    var childGoat = this.world.spawnBaby(goat, goat.targetGoat);
+    initializeGoat(world, childGoat);
 }
 
 /**
@@ -117,6 +118,12 @@ function updateGoatStats(elapsedTime, goat, goatCell) {
     // Update attributes
     goat.age += elapsedTime;
     goat.size = CHILD_GOAT_SIZE + (goat.age / MAXIMUM_GOAT_AGE) * (MAXIMUM_GOAT_SIZE - CHILD_GOAT_SIZE);
+    if (goat.matingCooldown > 0) {
+        goat.matingCooldown -= elapsedTime;
+        if (goat.matingCooldown < 0) {
+            goat.matingCooldown = 0;
+        }
+    }
 }
 
 /**

@@ -46,6 +46,7 @@ function spawnBaby(parent1, parent2) {
     var gender = Math.random() >= 0.5 ? 'M' : 'F';
     var goat = new Goat(parent1.x, parent1.y, gender, 0);
     this.goats.push(goat);
+    return goat;
 }
 
 /**

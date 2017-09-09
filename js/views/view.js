@@ -59,7 +59,7 @@ function drawWorld() {
  * Draw all the charts
  */
 function drawCharts() {
-    addChartPoint(this.liveGoatsChart, {x: Math.floor(this.secondsElapsed), y: world.goats.length}, CHART_MAXIMUM_POINS);
+    addChartPoint(this.liveGoatsChart, {x: Math.floor(this.secondsElapsed), y: world.goats.length}, CHART_MAXIMUM_POINTS);
     this.liveGoatsChart.render();
 }
 
