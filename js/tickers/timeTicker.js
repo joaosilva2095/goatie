@@ -87,15 +87,21 @@ function tryBreed(goat, goatCell) {
     }
 
     if (goat.targetGoat.matingCooldown > 0 ||
-        goat.matingCooldown > 0) {
+        goat.matingCooldown > 0 ||
+        goat.age < FERTILE_GOAT_AGE ||
+        goat.targetGoat.age < FERTILE_GOAT_AGE) {
         return;
     }
 
     // Apply cooldowns
-    if (goat.targetGoat.gender === 'F') {
-        goat.targetGoat.matingCooldown = Math.random() * (FERTILITY_AVERAGE_COOLDOWN * 2);
+    if (goat.targetGoat.gender === FEMALE && goat.gender === MALE) {
+        goat.targetGoat.matingCooldown = FEMALE_FERTILITY_COOLDOWN;
+        goat.matingCooldown = MALE_FERTILITY_COOLDOWN;
+    } else if (goat.targetGoat.gender === MALE && goat.gender === FEMALE) {
+        goat.targetGoat.matingCooldown = MALE_FERTILITY_COOLDOWN;
+        goat.matingCooldown = FEMALE_FERTILITY_COOLDOWN;
     } else {
-        goat.matingCooldown = Math.random() * (FERTILITY_AVERAGE_COOLDOWN * 2);
+        return;
     }
 
     // Born baby

@@ -23,7 +23,7 @@ function Cell(x, y, width, height, cellType, food) {
     switch (this.cellType) {
         case CellType.PLAINS:
             this.speedFactor = DEFAULT_PLAINS_SPEED_FACTOR;
-            this.growthFactor = Math.random() + 0.1;
+            this.growthFactor = BASE_GROWTH_FACTOR + Math.random();
             break;
         case CellType.WATER:
             this.speedFactor = DEFAULT_WATER_SPEED_FACTOR;
@@ -32,7 +32,7 @@ function Cell(x, y, width, height, cellType, food) {
             break;
         case CellType.MOUNTAIN:
             this.speedFactor = DEFAULT_MOUNTAIN_SPEED_FACTOR;
-            this.growthFactor = Math.random() * 2 + 0.2;
+            this.growthFactor = BASE_GROWTH_FACTOR + Math.random() * 3;
             break;
     }
 

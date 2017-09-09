@@ -43,9 +43,9 @@ function Goat(x, y, gender, age, food, speed, eatSpeed, hungrySpeed, maximumFood
  * Get the color of a goat
  */
 function getColor() {
-    if (this.gender === 'M') {
+    if (this.gender === MALE) {
         return COLOR_GOAT_MALE;
-    } else if (this.gender === 'F') {
+    } else if (this.gender === FEMALE) {
         return COLOR_GOAT_FEMALE;
     }
 }
@@ -72,7 +72,7 @@ function updateDesires() {
     if (this.age < FERTILE_GOAT_AGE ||
         this.matingCooldown > 0 ||
         this.eatingDesire === 1 ||
-        this.gender === 'F') {
+        this.gender === FEMALE) {
         this.findMateDesire = 0;
         return;
     }

@@ -43,7 +43,7 @@ function tickEntities() {
  * @param parent2 parent 2 of the baby
  */
 function spawnBaby(parent1, parent2) {
-    var gender = Math.random() >= 0.5 ? 'M' : 'F';
+    var gender = Math.random() >= 0.5 ? MALE : FEMALE;
     var goat = new Goat(parent1.x, parent1.y, gender, 0);
     this.goats.push(goat);
     return goat;

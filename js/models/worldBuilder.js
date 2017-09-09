@@ -15,16 +15,17 @@ function generateWorld(width, height, populationSize) {
  * @param populationSize size of the initial population
  */
 function generateGoats(world, populationSize) {
-    var goat, x, y, gender;
+    var goat, x, y, gender, age;
     var xOffset = DEFAULT_GOAT_SIZE,
         yOffset = DEFAULT_GOAT_SIZE;
 
     for (var i = 0; i < populationSize; i++) {
         lastCellID = 0;
 
-        gender = Math.random() >= 0.5 ? 'M' : 'F';
+        gender = Math.random() >= 0.5 ? MALE : FEMALE;
         x = Math.floor(Math.random() * (world.width - (2 * xOffset) + 1)) + xOffset;
         y = Math.floor(Math.random() * (world.height - (2 * yOffset) + 1)) + yOffset;
+        age = Math.random() * MAXIMUM_GOAT_AGE;
         goat = new Goat(x, y, gender);
         initializeGoat(world, goat);
         world.goats.push(goat);
