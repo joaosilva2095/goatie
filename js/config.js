@@ -1,11 +1,11 @@
 // COLORS
-var COLOR_GOAT_FEMALE = "#dda2ff";
-var COLOR_GOAT_MALE = "#2c2c8e";
-var COLOR_WATER = "#3d7bc0";
+var COLOR_GOAT_FEMALE = "#e2954a";
+var COLOR_GOAT_MALE = "#91826f";
+var COLOR_WATER = "#4db8ff";
 var COLOR_PLAINS_EMPTY = "#f5deb3";
-var COLOR_PLAINS_FULL = "#6b8e23";
+var COLOR_PLAINS_FULL = "#87b727";
 var COLOR_MOUNTAIN_EMPTY = "#4d3423";
-var COLOR_MOUNTAIN_FULL = "#526f35";
+var COLOR_MOUNTAIN_FULL = "#3c6c3c";
 
 // Board configurations
 var NUMBER_CELLS_FACTOR = 4;
