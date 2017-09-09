@@ -154,7 +154,7 @@ function updateGoatFood(elapsedTime, goat, goatCell) {
  * @param goat goat to check
  */
 function checkDead(goat) {
-    if (goat.age <= MAXIMUM_GOAT_AGE || goat.food > 0)
+    if (goat.age <= MAXIMUM_GOAT_AGE && goat.food > 0)
         return;
 
     this.world.goats.splice(this.world.goats.indexOf(goat), 1);
