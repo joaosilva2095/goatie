@@ -1,6 +1,6 @@
 // COLORS
-var COLOR_GOAT_FEMALE = "#e2954a";
-var COLOR_GOAT_MALE = "#91826f";
+var COLOR_GOAT_FEMALE = "#cd853f";
+var COLOR_GOAT_MALE = "#708090";
 var COLOR_WATER = "#4db8ff";
 var COLOR_PLAINS_EMPTY = "#f5deb3";
 var COLOR_PLAINS_FULL = "#87b727";
@@ -9,7 +9,7 @@ var COLOR_MOUNTAIN_FULL = "#3c6c3c";
 
 // Board configurations
 var NUMBER_CELLS_FACTOR = 4;
-var GRID_THICKNESS = 0.3;
+var GRID_THICKNESS = 0.2;
 var PENALTY_PROBABILITY = 0.9;
 
 // Simulator configuration
@@ -17,7 +17,7 @@ var INITIAL_POPULATION_SIZE = 100;
 var TICK_TIME = 50; // Milliseconds per tick
 
 // Goats defaults
-var DEFAULT_GOAT_AGE = 60;
+var DEFAULT_GOAT_AGE = 100;
 var DEFAULT_GOAT_SIZE = 10;
 var DEFAULT_GOAT_FOOD = 100;
 var DEFAULT_GOAT_SPEED = 40; // Pixels per second
