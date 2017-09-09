@@ -2,6 +2,9 @@ Goat.prototype.constructor = Goat;
 Goat.prototype.getColor = getColor;
 Goat.prototype.getKnowledgeCell = getKnowledgeCell;
 Goat.prototype.updateDesires = updateDesires;
+Goat.prototype.calculateIntention = calculateIntention;
+Goat.prototype.goExplore = goExplore;
+Goat.prototype.goEat = goEat;
 
 var lastGoatID = 0; // Last goat ID
 
@@ -61,9 +64,85 @@ function updateDesires() {
         this.eatingDesire = 1;
     }
 
-    if(this.id === 1)
-        console.log(this.eatingDesire);
+    this.exploreDesire = 1 - this.eatingDesire;
 
     this.targetX = Math.floor(Math.random() * 1920);
     this.targetY = Math.floor(Math.random() * 1080);
+}
+
+/**
+ * Calculate the goat intention
+ */
+function calculateIntention() {
+    if (this.exploreDesire > this.eatingDesire) {
+        this.goExplore();
+    } else {
+        this.goEat();
+        /*//discover adjacents
+        //add totals
+        if(totalFoodAvailable <= this.maximumFood / 10){
+            this.goExplore();
+        } else {
+            this.goEat();
+        }*/
+    }
+}
+
+/**
+ * Update target coordinates for the goat to explore
+ * the world
+ */
+function goExplore() {
+    if (this.id === 1) {
+        console.log('Going to explore');
+    }
+
+    var cell, distance, closestCell, closestDistance = Math.MAX_VALUE;
+    for(var i = 0; i < this.knownMap.length; i++) {
+        cell = this.knownMap[i];
+        if (cell.cellType !== CellType.UNKNOWN) {
+            continue;
+        }
+
+        distance = distanceBetween(cell.x + cell.width / 2, this.x, cell.y + cell.height / 2, this.y);
+        if(distance >= closestDistance) {
+            continue;
+        }
+
+        closestCell = cell;
+        closestDistance = distance;
+    }
+
+    // Everything is explored, go eat
+    if(closestCell === null) {
+        this.goEat();
+        return;
+    }
+
+    this.targetX = closestCell.x + Math.random() * closestCell.width;
+    this.targetY = closestCell.y + Math.random() * closestCell.height;
+}
+
+/**
+ * Update target coordinates for the goat to eat
+ */
+function goEat() {
+    if (this.id === 1) {
+        console.log('Going to eat');
+    }
+}
+
+/**
+ * Distance between two points
+ * @param x1 x1 coordinate
+ * @param x2 x2 coordinate
+ * @param y1 y1 coordinate
+ * @param y2 y2 coordinate
+ * @returns number between them
+ */
+function distanceBetween(x1, x2, y1, y2){
+    // Approximation by using octagons approach
+    var x = x2-x1;
+    var y = y2-y1;
+    return 1.426776695*Math.min(0.7071067812*(Math.abs(x)+Math.abs(y)), Math.max (Math.abs(x), Math.abs(y)));
 }

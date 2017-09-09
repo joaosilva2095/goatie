@@ -1,6 +1,6 @@
 World.prototype.constructor = World;
 World.prototype.getCell = getCell;
-World.prototype.updateDesires = updateDesires;
+World.prototype.tickEntities = tickEntities;
 
 function World(width, height) {
     this.width = width;
@@ -25,11 +25,14 @@ function getCell(x, y) {
 }
 
 /**
- * Run the world
+ * Tick all the entities desire
  */
-function updateDesires() {
+function tickEntities() {
+    var goat;
     for (var i = 0; i < this.goats.length; i++) {
-        this.goats[i].updateDesires();
+        goat = this.goats[i];
+        goat.updateDesires();
+        goat.calculateIntention();
     }
 }
 

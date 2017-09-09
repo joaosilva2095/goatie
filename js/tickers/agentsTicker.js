@@ -32,5 +32,5 @@ function stop() {
  * Tick
  */
 function tick() {
-    this.world.updateDesires();
+    this.world.tickEntities();
 }

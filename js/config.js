@@ -4,7 +4,7 @@ var GRID_THICKNESS = 0.3;
 var PENALTY_PROBABILITY = 0.9;
 
 // Simulator configuration
-var TICK_TIME = 3000; // Milliseconds per tick
+var TICK_TIME = 500; // Milliseconds per tick
 
 // Entities configurations
 var INITIAL_POPULATION_SIZE = 25;
