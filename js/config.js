@@ -4,10 +4,10 @@ var GRID_THICKNESS = 0.3;
 var PENALTY_PROBABILITY = 0.9;
 
 // Simulator configuration
-var TICK_TIME = 200; // Milliseconds per tick
+var TICK_TIME = 50; // Milliseconds per tick
 
 // Entities configurations
-var INITIAL_POPULATION_SIZE = 25;
+var INITIAL_POPULATION_SIZE = 100;
 var INITIAL_GOAT_SIZE = 10;
 var INITIAL_GOAT_FOOD = 100;
 var CELL_MAXIMUM_FOOD = 200; // Maximum food units

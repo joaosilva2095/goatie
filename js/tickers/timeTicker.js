@@ -148,5 +148,6 @@ function updateGoatFood(elapsedTime, goat, goatCell) {
 function checkDead(goat) {
     if (goat.food <= 0) {
         this.world.goats.splice(this.world.goats.indexOf(goat), 1);
+        console.log("Goats remaining: " + this.world.goats.length);
     }
 }

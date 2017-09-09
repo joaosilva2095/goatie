@@ -38,10 +38,6 @@ function Goat(x, y, gender, size, food, speed, eatSpeed, hungrySpeed, maximumFoo
  * Get the color of a goat
  */
 function getColor() {
-    if (this.id === 1) {
-        return 'black';
-    }
-
     if (this.gender === 'M') {
         return 'blue';
     } else if (this.gender === 'F') {
@@ -85,10 +81,6 @@ function calculateIntention() {
  * the world
  */
 function goExplore() {
-    if (this.id === 1) {
-        console.log('Going to explore');
-    }
-
     var cell, distance, closestCell = null, closestDistance = Math.MAX_VALUE;
     for (var i = 0; i < this.knownMap.length; i++) {
         cell = this.knownMap[i];
@@ -125,10 +117,6 @@ function goExplore() {
  * Update target coordinates for the goat to eat
  */
 function goEat() {
-    if (this.id === 1) {
-        console.log('Going to eat');
-    }
-
     var cell, distance, score, bestCell = null, bestScore = Math.MIN_VALUE;
     for (var i = 0; i < this.knownMap.length; i++) {
         cell = this.knownMap[i];
@@ -137,7 +125,9 @@ function goEat() {
         }
 
         distance = distanceBetween(cell.x + cell.width / 2, this.x, cell.y + cell.height / 2, this.y);
-        if(distance === 0 || cell.food <= this.hungrySpeed) {
+        if(distance === 0 ||
+            cell.food <= this.hungrySpeed ||
+            (distance / this.speed) >= (this.food / this.hungrySpeed)) {
             continue;
         }
 
