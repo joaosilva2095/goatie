@@ -14,7 +14,7 @@ var PENALTY_PROBABILITY = 0.9;
 
 // CHARTS
 var CHARTS_UPDATE_RATE = 1; // Update every seconds
-var CHART_MAXIMUM_POINS = 10; // Maximum number of points
+var CHART_MAXIMUM_POINS = 200; // Maximum number of points
 
 // Simulator configuration
 var INITIAL_POPULATION_SIZE = 100;
@@ -24,7 +24,7 @@ var TICK_TIME = 50; // Milliseconds per tick
 var DEFAULT_GOAT_AGE = 50;
 var DEFAULT_GOAT_SIZE = 10;
 var DEFAULT_GOAT_FOOD = 100;
-var DEFAULT_GOAT_SPEED = 40; // Pixels per second
+var DEFAULT_GOAT_SPEED = 20; // Pixels per second
 var DEFAULT_GOAT_EAT_SPEED = 80; // Units of food per second
 var DEFAULT_GOAT_HUNGRY_SPEED = 20; // Units of food that decrease per second
 var DEFAULT_GOAT_MAXIMUM_FOOD = 400; // Goat default maximum food

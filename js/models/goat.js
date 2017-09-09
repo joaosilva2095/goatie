@@ -121,8 +121,6 @@ function goEat() {
     var cell, distance, score, bestCell = null, bestScore = Math.MIN_VALUE;
     for (var i = 0; i < this.knownMap.length; i++) {
         cell = this.knownMap[i];
-        //if (cell.cellType === CellType.UNKNOWN ||
-        // cell.id === this.currentCell.id) {
         if (cell.cellType === CellType.UNKNOWN) {
             continue;
         }
