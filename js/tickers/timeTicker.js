@@ -5,6 +5,7 @@ TimeTicker.prototype.updateGoats = updateGoats;
 TimeTicker.prototype.updateGoatStats = updateGoatStats;
 TimeTicker.prototype.updateGoatCoordinates = updateGoatCoordinates;
 TimeTicker.prototype.updateGoatFood = updateGoatFood;
+TimeTicker.prototype.tryBreed = tryBreed;
 TimeTicker.prototype.checkDead = checkDead;
 
 function TimeTicker(world, view) {
@@ -65,9 +66,48 @@ function updateGoats(elapsedTime) {
         this.updateGoatCoordinates(elapsedTime, goat, goatCell);
         this.updateGoatFood(elapsedTime, goat, goatCell);
         this.checkDead(goat);
+        this.tryBreed(goat, goatCell);
     }
 }
 
+/**
+ * Try to breed a goat with another
+ * @param goat goat to try to breed
+ * @param goatCell cell of the goat
+ */
+function tryBreed(goat, goatCell) {
+    if (goat.targetGoat === null ||
+        goat.targetGoat === undefined) {
+        return;
+    }
+
+    var targetGoatCell = this.world.getCell(goat.targetGoat.x, goat.targetGoat.y);
+    if (targetGoatCell.id !== goatCell.id) {
+        return;
+    }
+
+    if (goat.targetGoat.matingCooldown > 0 ||
+        goat.matingCooldown > 0) {
+        return;
+    }
+
+    // Apply cooldowns
+    if (goat.targetGoat.gender === 'F') {
+        goat.targetGoat.matingCooldown = FERTILITY_COOLDOWN;
+    } else {
+        goat.matingCooldown = FERTILITY_COOLDOWN;
+    }
+
+    // Born baby
+    this.world.spawnBaby(goat, goat.targetGoat);
+}
+
+/**
+ * Update the goat stats
+ * @param elapsedTime elapsed time since last update
+ * @param goat goat to be updated
+ * @param goatCell cell of the goat
+ */
 function updateGoatStats(elapsedTime, goat, goatCell) {
     // Update knowledge
     var goatKnowledgeCell = goat.getKnowledgeCell(goatCell.id);

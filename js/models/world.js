@@ -1,6 +1,7 @@
 World.prototype.constructor = World;
 World.prototype.getCell = getCell;
 World.prototype.tickEntities = tickEntities;
+World.prototype.spawnBaby = spawnBaby;
 
 function World(width, height) {
     this.width = width;
@@ -34,6 +35,17 @@ function tickEntities() {
         goat.updateDesires();
         goat.calculateIntention();
     }
+}
+
+/**
+ * Spawn a baby
+ * @param parent1 parent 1 of the baby
+ * @param parent2 parent 2 of the baby
+ */
+function spawnBaby(parent1, parent2) {
+    var gender = Math.random() >= 0.5 ? 'M' : 'F';
+    var goat = new Goat(parent1.x, parent1.y, gender, 0);
+    this.goats.push(goat);
 }
 
 /**

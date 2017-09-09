@@ -13,6 +13,7 @@ function Goat(x, y, gender, age, food, speed, eatSpeed, hungrySpeed, maximumFood
     this.id = ++lastGoatID;
     this.x = x;
     this.y = y;
+    this.targetGoat = null;
     this.targetCell = null;
     this.targetX = x;
     this.targetY = y;
@@ -84,14 +85,18 @@ function updateDesires() {
 function calculateIntention() {
     if (this.exploreDesire > this.eatingDesire &&
         this.exploreDesire > this.findMateDesire) {
+        this.targetGoat = null;
         this.goExplore();
     } else if (this.eatingDesire > this.exploreDesire &&
         this.eatingDesire > this.findMateDesire) {
+        this.targetGoat = null;
         this.goEat();
     } else if (this.findMateDesire > this.exploreDesire &&
         this.findMateDesire > this.eatingDesire) {
+        this.targetCell = null;
         this.findMate();
     } else {
+        this.targetGoat = null;
         this.goEat();
     }
 }
@@ -201,10 +206,12 @@ function findMate() {
     }
 
     if(bestGoat === null || bestGoat === undefined) {
+        this.targetGoat = null;
         this.goEat();
         return;
     }
 
+    this.targetGoat = bestGoat;
     this.targetX = bestGoat.x;
     this.targetY = bestGoat.y;
 }
