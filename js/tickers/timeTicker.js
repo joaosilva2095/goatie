@@ -77,6 +77,9 @@ function updateGoats(elapsedTime) {
  * @param goatCell cell where the goat is
  */
 function updateGoatCoordinates(elapsedTime, goat, goatCell) {
+    // Cell
+    goat.currentCell = goatCell;
+
     // Calculate X
     if (goat.targetX > goat.x) {
         goat.x += goat.speed * goatCell.speedFactor * elapsedTime;

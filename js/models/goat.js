@@ -10,8 +10,10 @@ var lastGoatID = 0; // Last goat ID
 
 function Goat(x, y, gender, size, food, speed, eatSpeed, hungrySpeed, maximumFood) {
     this.id = ++lastGoatID;
+    this.currentCell = null;
     this.x = x;
     this.y = y;
+    this.targetCell = null;
     this.targetX = x;
     this.targetY = y;
     this.gender = gender;
@@ -60,14 +62,11 @@ function getKnowledgeCell(cellID) {
  */
 function updateDesires() {
     this.eatingDesire = 1.437465634 * Math.exp(-0.107170305 * (this.food / this.hungrySpeed));
-    if(this.eatingDesire > 1) {
+    if (this.eatingDesire > 1) {
         this.eatingDesire = 1;
     }
 
     this.exploreDesire = 1 - this.eatingDesire;
-
-    this.targetX = Math.floor(Math.random() * 1920);
-    this.targetY = Math.floor(Math.random() * 1080);
 }
 
 /**
@@ -78,13 +77,6 @@ function calculateIntention() {
         this.goExplore();
     } else {
         this.goEat();
-        /*//discover adjacents
-        //add totals
-        if(totalFoodAvailable <= this.maximumFood / 10){
-            this.goExplore();
-        } else {
-            this.goEat();
-        }*/
     }
 }
 
@@ -97,15 +89,15 @@ function goExplore() {
         console.log('Going to explore');
     }
 
-    var cell, distance, closestCell, closestDistance = Math.MAX_VALUE;
-    for(var i = 0; i < this.knownMap.length; i++) {
+    var cell, distance, closestCell = null, closestDistance = Math.MAX_VALUE;
+    for (var i = 0; i < this.knownMap.length; i++) {
         cell = this.knownMap[i];
         if (cell.cellType !== CellType.UNKNOWN) {
             continue;
         }
 
         distance = distanceBetween(cell.x + cell.width / 2, this.x, cell.y + cell.height / 2, this.y);
-        if(distance >= closestDistance) {
+        if (distance >= closestDistance) {
             continue;
         }
 
@@ -114,11 +106,17 @@ function goExplore() {
     }
 
     // Everything is explored, go eat
-    if(closestCell === null) {
+    if (closestCell === null) {
         this.goEat();
         return;
     }
 
+    // Do not update target if is the same cell
+    if (this.targetCell === closestCell) {
+        return;
+    }
+
+    this.targetCell = closestCell;
     this.targetX = closestCell.x + Math.random() * closestCell.width;
     this.targetY = closestCell.y + Math.random() * closestCell.height;
 }
@@ -130,6 +128,42 @@ function goEat() {
     if (this.id === 1) {
         console.log('Going to eat');
     }
+
+    var cell, distance, score, bestCell = null, bestScore = Math.MIN_VALUE;
+    for (var i = 0; i < this.knownMap.length; i++) {
+        cell = this.knownMap[i];
+        if (cell.cellType === CellType.UNKNOWN || cell.id === this.currentCell.id) {
+            continue;
+        }
+
+        distance = distanceBetween(cell.x + cell.width / 2, this.x, cell.y + cell.height / 2, this.y);
+        if(distance === 0 || cell.food <= this.hungrySpeed) {
+            continue;
+        }
+
+        score = cell.food / distance;
+        if (score <= bestScore) {
+            continue;
+        }
+
+        bestCell = cell;
+        bestScore = score;
+    }
+
+    // Nothing is explored
+    if (bestCell === null) {
+        this.goExplore();
+        return;
+    }
+
+    // Do not update target if is the same cell
+    if (this.targetCell === bestCell) {
+        return;
+    }
+
+    this.targetCell = bestCell;
+    this.targetX = bestCell.x + Math.random() * bestCell.width;
+    this.targetY = bestCell.y + Math.random() * bestCell.height;
 }
 
 /**
@@ -140,9 +174,9 @@ function goEat() {
  * @param y2 y2 coordinate
  * @returns number between them
  */
-function distanceBetween(x1, x2, y1, y2){
+function distanceBetween(x1, x2, y1, y2) {
     // Approximation by using octagons approach
-    var x = x2-x1;
-    var y = y2-y1;
-    return 1.426776695*Math.min(0.7071067812*(Math.abs(x)+Math.abs(y)), Math.max (Math.abs(x), Math.abs(y)));
+    var x = x2 - x1;
+    var y = y2 - y1;
+    return 1.426776695 * Math.min(0.7071067812 * (Math.abs(x) + Math.abs(y)), Math.max(Math.abs(x), Math.abs(y)));
 }
