@@ -2,6 +2,7 @@ TimeTicker.prototype.constructor = TimeTicker;
 TimeTicker.prototype.updateEntities = updateEntities;
 TimeTicker.prototype.updateCells = updateCells;
 TimeTicker.prototype.updateGoats = updateGoats;
+TimeTicker.prototype.updateGoatStats = updateGoatStats;
 TimeTicker.prototype.updateGoatCoordinates = updateGoatCoordinates;
 TimeTicker.prototype.updateGoatFood = updateGoatFood;
 TimeTicker.prototype.checkDead = checkDead;
@@ -53,21 +54,28 @@ function updateCells(elapsedTime) {
  * @param elapsedTime elapsed time since last update
  */
 function updateGoats(elapsedTime) {
-    var goat, goatCell, goatKnowledgeCell;
+    var goat, goatCell;
 
     for (var i = 0; i < this.world.goats.length; i++) {
         goat = this.world.goats[i];
         goatCell = this.world.getCell(goat.x, goat.y);
 
-        // Update knowledge
-        goatKnowledgeCell = goat.getKnowledgeCell(goatCell.id);
-        goatKnowledgeCell.cellType = goatCell.cellType;
-        goatKnowledgeCell.food = goatCell.food;
-
+        this.updateGoatStats(elapsedTime, goat, goatCell);
         this.updateGoatCoordinates(elapsedTime, goat, goatCell);
         this.updateGoatFood(elapsedTime, goat, goatCell);
         this.checkDead(goat);
     }
+}
+
+function updateGoatStats(elapsedTime, goat, goatCell) {
+    // Update knowledge
+    var goatKnowledgeCell = goat.getKnowledgeCell(goatCell.id);
+    goatKnowledgeCell.cellType = goatCell.cellType;
+    goatKnowledgeCell.food = goatCell.food;
+
+    // Update attributes
+    goat.age += elapsedTime;
+    goat.size = CHILD_GOAT_SIZE + (goat.age / MAXIMUM_GOAT_AGE) * (MAXIMUM_GOAT_SIZE - CHILD_GOAT_SIZE);
 }
 
 /**
@@ -128,11 +136,11 @@ function updateGoatFood(elapsedTime, goat, goatCell) {
     var goatMouthSpace = goat.eatSpeed * elapsedTime;
     var goatStomachSpace = goat.maximumFood - goat.food;
 
-    if(goatStomachSpace < goatMouthSpace) {
+    if (goatStomachSpace < goatMouthSpace) {
         goatMouthSpace = goatStomachSpace;
     }
 
-    if(goatCell.food < goatMouthSpace){
+    if (goatCell.food < goatMouthSpace) {
         goat.food += goatCell.food;
         goatCell.food = 0;
     } else {
@@ -146,8 +154,9 @@ function updateGoatFood(elapsedTime, goat, goatCell) {
  * @param goat goat to check
  */
 function checkDead(goat) {
-    if (goat.food <= 0) {
-        this.world.goats.splice(this.world.goats.indexOf(goat), 1);
-        console.log("Goats remaining: " + this.world.goats.length);
-    }
+    if (goat.age <= MAXIMUM_GOAT_AGE || goat.food > 0)
+        return;
+
+    this.world.goats.splice(this.world.goats.indexOf(goat), 1);
+    console.log("Goats remaining: " + this.world.goats.length);
 }

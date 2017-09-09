@@ -42,25 +42,41 @@ function Cell(x, y, width, height, cellType, food) {
  * Get the color of a goat
  */
 function getColor() {
-    var r, g, b;
+    var color;
+
     switch (this.cellType) {
         case CellType.PLAINS:
-            r = Math.floor((this.food / CELL_MAXIMUM_FOOD) * (69 - 220) + 220);
-            g = Math.floor((this.food / CELL_MAXIMUM_FOOD) * (182 - 227) + 227);
-            b = Math.floor((this.food / CELL_MAXIMUM_FOOD) * (73 - 91) + 91);
+            color = calculateGradientColor(COLOR_MOUNTAIN_FULL.replace("#", ""), COLOR_MOUNTAIN_EMPTY.replace("#", ""), (this.food / CELL_MAXIMUM_FOOD));
+
             break;
         case CellType.WATER:
-            r = 64;
-            g = 164;
-            b = 223;
+            color = COLOR_WATER;
             break;
         case CellType.MOUNTAIN:
-            r = Math.floor((this.food / CELL_MAXIMUM_FOOD) * (44 - 90) + 90);
-            g = Math.floor((this.food / CELL_MAXIMUM_FOOD) * (119 - 63) + 63);
-            b = Math.floor((this.food / CELL_MAXIMUM_FOOD) * (68 - 55) + 55);
+            color = calculateGradientColor(COLOR_PLAINS_FULL.replace("#", ""), COLOR_PLAINS_EMPTY.replace("#", ""), (this.food / CELL_MAXIMUM_FOOD));
             break;
     }
 
 
-    return "rgba(" + r + ", " + g + ", " + b + ", 255)";
+    return color;
+}
+
+/**
+ * Calculate the gradient color given two colors and a ratio
+ * @param colorFinal final color of the gradient
+ * @param colorInitial initial color of the gradient
+ * @param ratio ratio
+ * @returns {string} result color in hexadecimal format
+ */
+function calculateGradientColor(colorFinal, colorInitial, ratio) {
+    var hex = function(x) {
+        x = x.toString(16);
+        return (x.length === 1) ? '0' + x : x;
+    };
+
+    var r = Math.ceil(parseInt(colorFinal.substring(0,2), 16) * ratio + parseInt(colorInitial.substring(0,2), 16) * (1-ratio)),
+        g = Math.ceil(parseInt(colorFinal.substring(2,4), 16) * ratio + parseInt(colorInitial.substring(2,4), 16) * (1-ratio)),
+        b = Math.ceil(parseInt(colorFinal.substring(4,6), 16) * ratio + parseInt(colorInitial.substring(4,6), 16) * (1-ratio));
+
+    return "#" + hex(r) + hex(g) + hex(b);
 }

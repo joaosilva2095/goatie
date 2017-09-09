@@ -16,8 +16,8 @@ function generateWorld(width, height, populationSize) {
  */
 function generateGoats(world, populationSize) {
     var goat, x, y, gender;
-    var xOffset = INITIAL_GOAT_SIZE,
-        yOffset = INITIAL_GOAT_SIZE;
+    var xOffset = DEFAULT_GOAT_SIZE,
+        yOffset = DEFAULT_GOAT_SIZE;
 
     for (var i = 0; i < populationSize; i++) {
         lastCellID = 0;

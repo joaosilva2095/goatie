@@ -8,7 +8,7 @@ Goat.prototype.goEat = goEat;
 
 var lastGoatID = 0; // Last goat ID
 
-function Goat(x, y, gender, size, food, speed, eatSpeed, hungrySpeed, maximumFood) {
+function Goat(x, y, gender, age, food, speed, eatSpeed, hungrySpeed, maximumFood) {
     this.id = ++lastGoatID;
     this.currentCell = null;
     this.x = x;
@@ -17,8 +17,9 @@ function Goat(x, y, gender, size, food, speed, eatSpeed, hungrySpeed, maximumFoo
     this.targetX = x;
     this.targetY = y;
     this.gender = gender;
-    this.size = size || INITIAL_GOAT_SIZE;
-    this.food = food || INITIAL_GOAT_FOOD;
+    this.age = age || DEFAULT_GOAT_AGE;
+    this.size = CHILD_GOAT_SIZE + (this.age / MAXIMUM_GOAT_AGE) * (MAXIMUM_GOAT_SIZE - CHILD_GOAT_SIZE);
+    this.food = food || DEFAULT_GOAT_FOOD;
 
     // Attributes
     this.speed = speed || DEFAULT_GOAT_SPEED;
@@ -39,9 +40,9 @@ function Goat(x, y, gender, size, food, speed, eatSpeed, hungrySpeed, maximumFoo
  */
 function getColor() {
     if (this.gender === 'M') {
-        return 'blue';
+        return COLOR_GOAT_MALE;
     } else if (this.gender === 'F') {
-        return 'red';
+        return COLOR_GOAT_FEMALE;
     }
 }
 
@@ -154,6 +155,15 @@ function goEat() {
     this.targetCell = bestCell;
     this.targetX = bestCell.x + Math.random() * bestCell.width;
     this.targetY = bestCell.y + Math.random() * bestCell.height;
+}
+
+/**
+ * Update target coordinates for the closest goat mate
+ */
+function findMate(){
+    //iterar por cabras
+    //descobrir cabra mais proxima
+    //é esse o target
 }
 
 /**
