@@ -31,6 +31,8 @@ var DEFAULT_GOAT_MAXIMUM_FOOD = 400; // Goat default maximum food
 var CHILD_GOAT_SIZE = 5; // Child goat size
 var MAXIMUM_GOAT_SIZE = 12; // Maximum goat size
 var MAXIMUM_GOAT_AGE = 200; // Maximum goat age in seconds
+var FERTILE_GOAT_AGE = 50; // Fertile goat age
+var FERTILITY_COOLDOWN = 20; // Cooldown before being fertile again
 
 // Cells defaults
 var DEFAULT_PLAINS_SPEED_FACTOR = 1; // Goat speed multiplier

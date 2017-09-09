@@ -29,6 +29,10 @@ function generateGoats(world, populationSize) {
         initializeGoat(world, goat);
         world.goats.push(goat);
     }
+
+    for (i = 0; i < populationSize; i++) {
+        world.goats[i].knownGoats = world.goats;
+    }
 }
 
 /**

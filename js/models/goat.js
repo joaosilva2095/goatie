@@ -5,12 +5,12 @@ Goat.prototype.updateDesires = updateDesires;
 Goat.prototype.calculateIntention = calculateIntention;
 Goat.prototype.goExplore = goExplore;
 Goat.prototype.goEat = goEat;
+Goat.prototype.findMate = findMate;
 
 var lastGoatID = 0; // Last goat ID
 
 function Goat(x, y, gender, age, food, speed, eatSpeed, hungrySpeed, maximumFood) {
     this.id = ++lastGoatID;
-    this.currentCell = null;
     this.x = x;
     this.y = y;
     this.targetCell = null;
@@ -29,10 +29,13 @@ function Goat(x, y, gender, age, food, speed, eatSpeed, hungrySpeed, maximumFood
 
     // Knowledge
     this.knownMap = [];
+    this.knownGoats = [];
+    this.matingCooldown = 0;
 
     // Desires
     this.eatingDesire = 0;
     this.exploreDesire = 0;
+    this.findMateDesire = 0;
 }
 
 /**
@@ -64,14 +67,30 @@ function updateDesires() {
     }
 
     this.exploreDesire = 1 - this.eatingDesire;
+
+    if (this.age < FERTILE_GOAT_AGE ||
+        this.matingCooldown > 0 ||
+        this.eatingDesire === 1) {
+        this.findMateDesire = 0;
+        return;
+    }
+
+    this.findMateDesire = 1 / (Math.sqrt(this.eatingDesire) / Math.sqrt(this.exploreDesire));
 }
 
 /**
  * Calculate the goat intention
  */
 function calculateIntention() {
-    if (this.exploreDesire > this.eatingDesire) {
+    if (this.exploreDesire > this.eatingDesire &&
+        this.exploreDesire > this.findMateDesire) {
         this.goExplore();
+    } else if (this.eatingDesire > this.exploreDesire &&
+        this.eatingDesire > this.findMateDesire) {
+        this.goEat();
+    } else if (this.findMateDesire > this.exploreDesire &&
+        this.findMateDesire > this.eatingDesire) {
+        this.findMate();
     } else {
         this.goEat();
     }
@@ -99,7 +118,7 @@ function goExplore() {
     }
 
     // Everything is explored, go eat
-    if (closestCell === null) {
+    if (closestCell === null || closestCell === undefined) {
         this.goEat();
         return;
     }
@@ -126,7 +145,7 @@ function goEat() {
         }
 
         distance = distanceBetween(cell.x + cell.width / 2, this.x, cell.y + cell.height / 2, this.y);
-        if(distance === 0 ||
+        if (distance === 0 ||
             cell.food <= this.hungrySpeed ||
             (distance / this.speed) >= (this.food / this.hungrySpeed)) {
             continue;
@@ -142,7 +161,7 @@ function goEat() {
     }
 
     // Nothing is explored
-    if (bestCell === null) {
+    if (bestCell === null || bestCell === undefined) {
         this.goExplore();
         return;
     }
@@ -160,10 +179,34 @@ function goEat() {
 /**
  * Update target coordinates for the closest goat mate
  */
-function findMate(){
-    //iterar por cabras
-    //descobrir cabra mais proxima
-    //é esse o target
+function findMate() {
+    var goat, distance, bestGoat = null, bestDistance = Math.MAX_VALUE;
+    for (var i = 0; i < this.knownGoats.length; i++) {
+        goat = this.knownGoats[i];
+
+        if (goat.id === this.id ||
+            goat.gender === this.gender ||
+            goat.matingCooldown > 0) {
+            continue;
+        }
+
+        distance = distanceBetween(goat.x, this.x, goat.y, this.y);
+
+        if (distance >= bestDistance) {
+            continue;
+        }
+
+        bestGoat = goat;
+        bestDistance = distance;
+    }
+
+    if(bestGoat === null || bestGoat === undefined) {
+        this.goEat();
+        return;
+    }
+
+    this.targetX = bestGoat.x;
+    this.targetY = bestGoat.y;
 }
 
 /**

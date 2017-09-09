@@ -22,7 +22,7 @@ function updateEntities(timestamp) {
         this.lastTimestamp = timestamp;
     }
 
-    var elapsedTime = (timestamp - this.lastTimestamp) / 1000;;
+    var elapsedTime = (timestamp - this.lastTimestamp) / 1000;
 
     this.updateCells(elapsedTime);
     this.updateGoats(elapsedTime);
@@ -86,9 +86,6 @@ function updateGoatStats(elapsedTime, goat, goatCell) {
  * @param goatCell cell where the goat is
  */
 function updateGoatCoordinates(elapsedTime, goat, goatCell) {
-    // Cell
-    goat.currentCell = goatCell;
-
     // Calculate X
     if (goat.targetX > goat.x) {
         goat.x += goat.speed * goatCell.speedFactor * elapsedTime;
