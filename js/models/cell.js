@@ -46,14 +46,14 @@ function getColor() {
 
     switch (this.cellType) {
         case CellType.PLAINS:
-            color = calculateGradientColor(COLOR_MOUNTAIN_FULL.replace("#", ""), COLOR_MOUNTAIN_EMPTY.replace("#", ""), (this.food / CELL_MAXIMUM_FOOD));
+            color = calculateGradientColor(COLOR_PLAINS_FULL.replace("#", ""), COLOR_PLAINS_EMPTY.replace("#", ""), (this.food / CELL_MAXIMUM_FOOD));
 
             break;
         case CellType.WATER:
             color = COLOR_WATER;
             break;
         case CellType.MOUNTAIN:
-            color = calculateGradientColor(COLOR_PLAINS_FULL.replace("#", ""), COLOR_PLAINS_EMPTY.replace("#", ""), (this.food / CELL_MAXIMUM_FOOD));
+            color = calculateGradientColor(COLOR_MOUNTAIN_FULL.replace("#", ""), COLOR_MOUNTAIN_EMPTY.replace("#", ""), (this.food / CELL_MAXIMUM_FOOD));
             break;
     }
 
