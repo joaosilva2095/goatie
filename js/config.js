@@ -13,7 +13,7 @@ var GRID_THICKNESS = 0.2;
 var PENALTY_PROBABILITY = 0.9;
 
 // Simulator configuration
-var INITIAL_POPULATION_SIZE = 100;
+var INITIAL_POPULATION_SIZE = 1;
 var TICK_TIME = 50; // Milliseconds per tick
 
 // Goats defaults
@@ -26,7 +26,7 @@ var DEFAULT_GOAT_HUNGRY_SPEED = 20; // Units of food that decrease per second
 var DEFAULT_GOAT_MAXIMUM_FOOD = 400; // Goat default maximum food
 var CHILD_GOAT_SIZE = 5; // Child goat size
 var MAXIMUM_GOAT_SIZE = 12; // Maximum goat size
-var MAXIMUM_GOAT_AGE = 200; // Maximum goat age in seconds
+var MAXIMUM_GOAT_AGE = 200000; // Maximum goat age in seconds
 
 // Cells defaults
 var DEFAULT_PLAINS_SPEED_FACTOR = 1; // Goat speed multiplier
