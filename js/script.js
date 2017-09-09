@@ -11,8 +11,11 @@ function onLoad() {
     console.log('Initial world:');
     console.log(world);
 
+    // Charts
+    var liveGoatsChart = createChart("liveGoatsChart", "", "", "", 250, 100, []);
+
     // View
-    view = new View(world);
+    view = new View(world, liveGoatsChart);
     view.resizeCanvas();
     $(window).resize($.proxy(view.resizeCanvas, view));
 

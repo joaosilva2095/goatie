@@ -12,6 +12,10 @@ var NUMBER_CELLS_FACTOR = 4;
 var GRID_THICKNESS = 0.2;
 var PENALTY_PROBABILITY = 0.9;
 
+// CHARTS
+var CHARTS_UPDATE_RATE = 1; // Update every seconds
+var CHART_MAXIMUM_POINS = 10; // Maximum number of points
+
 // Simulator configuration
 var INITIAL_POPULATION_SIZE = 100;
 var TICK_TIME = 50; // Milliseconds per tick

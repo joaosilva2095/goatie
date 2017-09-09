@@ -17,16 +17,17 @@ function TimeTicker(world, view) {
  * Update the entities
  */
 function updateEntities(timestamp) {
-    if (!this.lastTimestamp) {
+    if (this.lastTimestamp === undefined ||
+        this.lastTimestamp === null) {
         this.lastTimestamp = timestamp;
     }
 
-    var elapsedTime = (timestamp - this.lastTimestamp) / 1000;
+    var elapsedTime = (timestamp - this.lastTimestamp) / 1000;;
 
     this.updateCells(elapsedTime);
     this.updateGoats(elapsedTime);
 
-    this.view.drawWorld();
+    this.view.drawScreen(elapsedTime);
 
     this.lastTimestamp = timestamp;
     window.requestAnimationFrame(this.updateEntities.bind(this));

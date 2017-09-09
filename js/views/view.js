@@ -1,26 +1,43 @@
 View.prototype.constructor = View;
 View.prototype.resizeCanvas = resizeCanvas;
+View.prototype.drawScreen = drawScreen;
 View.prototype.drawWorld = drawWorld;
+View.prototype.drawCharts = drawCharts;
 View.prototype.drawCell = drawCell;
 View.prototype.drawGoat = drawGoat;
 
-function View(world) {
+function View(world, liveGoatsChart) {
     this.canvas = document.getElementById("board");
     this.context = this.canvas.getContext("2d");
     this.world = world;
+    this.liveGoatsChart = liveGoatsChart;
+    this.chartsUpdateElapsedTime = CHARTS_UPDATE_RATE;
+    this.secondsElapsed = 0;
 }
 
 /**
  * Function to resize the canvas
  */
 function resizeCanvas() {
-    console.log('Resizing the canvas');
-
     // Resize Canvas
     this.canvas.width = document.body.clientWidth;
     this.canvas.height = document.body.clientHeight;
 
+    this.drawScreen(0);
+}
+
+/**
+ * Draw everything on the screen
+ */
+function drawScreen(elapsedTime) {
     this.drawWorld();
+
+    this.chartsUpdateElapsedTime += elapsedTime;
+    this.secondsElapsed += elapsedTime;
+    if(this.chartsUpdateElapsedTime >= CHARTS_UPDATE_RATE) {
+        this.drawCharts();
+        this.chartsUpdateElapsedTime = 0;
+    }
 }
 
 /**
@@ -36,6 +53,14 @@ function drawWorld() {
     for(i = 0; i < world.goats.length; i++) {
         view.drawGoat(world.goats[i]);
     }
+}
+
+/**
+ * Draw all the charts
+ */
+function drawCharts() {
+    addChartPoint(this.liveGoatsChart, {x: Math.floor(this.secondsElapsed), y: world.goats.length}, CHART_MAXIMUM_POINS);
+    this.liveGoatsChart.render();
 }
 
 /**
