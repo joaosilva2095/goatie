@@ -37,7 +37,7 @@ var MAXIMUM_GOAT_HUNGRY_SPEED = 40; // Units of food that decrease per second
 var MINIMUM_GOAT_FOOD = 100; // Goat maximum food
 var MAXIMUM_GOAT_FOOD = 500; // Goat maximum food
 var FERTILE_GOAT_AGE = 100; // Fertile goat age
-var FEMALE_FERTILITY_COOLDOWN = 100; // Female cooldown before being fertile
+var FEMALE_FERTILITY_COOLDOWN = 50; // Female cooldown before being fertile
 var MALE_FERTILITY_COOLDOWN = 5; // Male cooldown before being fertile
 
 // Cells defaults
