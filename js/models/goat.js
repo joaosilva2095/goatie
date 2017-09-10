@@ -25,8 +25,8 @@ function Goat(x, y, gender, age, food, speed, eatSpeed, hungrySpeed, maximumFood
     // Attributes
     this.speed = speed || DEFAULT_GOAT_SPEED;
     this.eatSpeed = eatSpeed || DEFAULT_GOAT_EAT_SPEED;
-    this.hungrySpeed = hungrySpeed || DEFAULT_GOAT_HUNGRY_SPEED;
-    this.maximumFood = maximumFood || DEFAULT_GOAT_MAXIMUM_FOOD;
+    this.hungrySpeed = hungrySpeed || MAXIMUM_GOAT_HUNGRY_SPEED;
+    this.maximumFood = maximumFood || MAXIMUM_GOAT_FOOD;
 
     // Knowledge
     this.knownMap = [];
