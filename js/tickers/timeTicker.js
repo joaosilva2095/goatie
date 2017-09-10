@@ -63,6 +63,10 @@ function updateGoats(elapsedTime) {
         goat = this.world.goats[i];
         goatCell = this.world.getCell(goat.x, goat.y);
 
+        if(goat.id === 1) {
+            console.log(goatCell);
+        }
+
         this.updateGoatStats(elapsedTime, goat, goatCell);
         this.updateGoatCoordinates(elapsedTime, goat, goatCell);
         this.updateGoatFood(elapsedTime, goat, goatCell);

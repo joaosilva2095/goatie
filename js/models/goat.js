@@ -24,6 +24,10 @@ function Goat(x, y, gender, age, food, speed, eatSpeed, hungrySpeed, maximumFood
 
     // Attributes
     this.speed = speed || DEFAULT_GOAT_SPEED;
+    if(this.gender === MALE) {
+        this.speed *= 1.1;
+    }
+
     this.eatSpeed = eatSpeed || DEFAULT_GOAT_EAT_SPEED;
     this.hungrySpeed = hungrySpeed || DEFAULT_GOAT_HUNGRY_SPEED;
     this.maximumFood = maximumFood || DEFAULT_GOAT_MAXIMUM_FOOD;
@@ -43,6 +47,10 @@ function Goat(x, y, gender, age, food, speed, eatSpeed, hungrySpeed, maximumFood
  * Get the color of a goat
  */
 function getColor() {
+    if(this.id === 1) {
+        return "black";
+    }
+
     if (this.gender === MALE) {
         return COLOR_GOAT_MALE;
     } else if (this.gender === FEMALE) {
@@ -103,6 +111,8 @@ function calculateIntention() {
  * the world
  */
 function goExplore() {
+    this.targetGoat = null;
+
     var cell, distance, closestCell = null, closestDistance = Math.MAX_VALUE;
     for (var i = 0; i < this.knownMap.length; i++) {
         cell = this.knownMap[i];
@@ -139,6 +149,8 @@ function goExplore() {
  * Update target coordinates for the goat to eat
  */
 function goEat() {
+    this.targetGoat = null;
+
     var cell, distance, score, bestCell = null, bestScore = Math.MIN_VALUE;
     for (var i = 0; i < this.knownMap.length; i++) {
         cell = this.knownMap[i];
@@ -182,12 +194,13 @@ function goEat() {
  * Update target coordinates for the closest goat mate
  */
 function findMate() {
+    this.targetCell = null;
+
     var goat, distance, bestGoat = null, bestDistance = Math.MAX_VALUE;
     for (var i = 0; i < this.knownGoats.length; i++) {
         goat = this.knownGoats[i];
 
-        if (goat.id === this.id ||
-            goat.gender === this.gender ||
+        if (goat.gender === this.gender ||
             goat.age < FERTILE_GOAT_AGE ||
             goat.matingCooldown > 0) {
             continue;
@@ -204,7 +217,6 @@ function findMate() {
     }
 
     if(bestGoat === null || bestGoat === undefined) {
-        this.targetGoat = null;
         this.goEat();
         return;
     }
