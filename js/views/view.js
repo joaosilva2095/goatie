@@ -67,8 +67,8 @@ function drawCharts() {
  * Draw a cell in the canvas
  */
 function drawCell(cell) {
-    var xFactor = this.canvas.width / this.world.width;
-    var yFactor = this.canvas.height / this.world.height;
+    var xFactor = this.canvas.width / (1.0 * this.world.width);
+    var yFactor = this.canvas.height / (1.0 * this.world.height);
 
     this.context.fillStyle = cell.getColor();
     this.context.fillRect(cell.x * xFactor, cell.y * yFactor, cell.width * xFactor - GRID_THICKNESS, cell.height * yFactor - GRID_THICKNESS);
