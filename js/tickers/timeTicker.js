@@ -24,6 +24,7 @@ function updateEntities(timestamp) {
     }
 
     var elapsedTime = (timestamp - this.lastTimestamp) / 1000;
+    elapsedTime *= SIMULATION_SPEED;
 
     this.updateCells(elapsedTime);
     this.updateGoats(elapsedTime);

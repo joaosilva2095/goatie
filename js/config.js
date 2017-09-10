@@ -8,6 +8,7 @@ var COLOR_MOUNTAIN_EMPTY = "#4d3423";
 var COLOR_MOUNTAIN_FULL = "#3c6c3c";
 
 // Board configurations
+var SIMULATION_SPEED = 10;
 var NUMBER_CELLS_FACTOR = 4;
 var GRID_THICKNESS = 0.2;
 var PENALTY_PROBABILITY = 0.9;

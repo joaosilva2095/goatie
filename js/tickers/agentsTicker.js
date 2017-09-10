@@ -13,7 +13,7 @@ function AgentsTicker(world) {
  */
 function start() {
     this.tick();
-    this.intervalID = setInterval(this.tick, TICK_TIME);
+    this.intervalID = setInterval(this.tick, TICK_TIME / SIMULATION_SPEED);
 }
 
 /**
