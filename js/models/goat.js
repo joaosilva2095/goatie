@@ -24,10 +24,6 @@ function Goat(x, y, gender, age, food, speed, eatSpeed, hungrySpeed, maximumFood
 
     // Attributes
     this.speed = speed || DEFAULT_GOAT_SPEED;
-    if(this.gender === MALE) {
-        this.speed *= 2;
-    }
-
     this.eatSpeed = eatSpeed || DEFAULT_GOAT_EAT_SPEED;
     this.hungrySpeed = hungrySpeed || DEFAULT_GOAT_HUNGRY_SPEED;
     this.maximumFood = maximumFood || DEFAULT_GOAT_MAXIMUM_FOOD;
@@ -50,7 +46,11 @@ function getColor() {
     if (this.gender === MALE) {
         return COLOR_GOAT_MALE;
     } else if (this.gender === FEMALE) {
-        return COLOR_GOAT_FEMALE;
+        if(this.matingCooldown === 0 && this.age >= FERTILE_GOAT_AGE) {
+            return COLOR_GOAT_FEMALE_MATING;
+        } else {
+            return COLOR_GOAT_FEMALE;
+        }
     }
 }
 
