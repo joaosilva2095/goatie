@@ -24,7 +24,6 @@ var TICK_TIME = 50; // Milliseconds per tick
 
 // Goats defaults
 var DEFAULT_GOAT_AGE = 10;
-var DEFAULT_GOAT_SIZE = 8;
 var DEFAULT_GOAT_FOOD = 250;
 var DEFAULT_GOAT_SPEED = 40; // Pixels per second
 var DEFAULT_GOAT_EAT_SPEED = 80; // Units of food per second

@@ -209,5 +209,4 @@ function checkDead(goat) {
         return;
 
     this.world.goats.splice(this.world.goats.indexOf(goat), 1);
-    console.log("Goats remaining: " + this.world.goats.length);
 }
