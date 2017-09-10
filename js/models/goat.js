@@ -25,7 +25,7 @@ function Goat(x, y, gender, age, food, speed, eatSpeed, hungrySpeed, maximumFood
     // Attributes
     this.speed = speed || DEFAULT_GOAT_SPEED;
     if(this.gender === MALE) {
-        this.speed *= 1.1;
+        this.speed *= 2;
     }
 
     this.eatSpeed = eatSpeed || DEFAULT_GOAT_EAT_SPEED;
@@ -75,13 +75,13 @@ function updateDesires() {
 
     if (this.age < FERTILE_GOAT_AGE ||
         this.matingCooldown > 0 ||
-        this.eatingDesire === 1 ||
+        this.eatingDesire > 0.5 ||
         this.gender === FEMALE) {
         this.findMateDesire = 0;
         return;
     }
 
-    this.findMateDesire = 1 / (Math.sqrt(this.eatingDesire) / Math.sqrt(this.exploreDesire));
+    this.findMateDesire = 1;
 }
 
 /**
@@ -190,7 +190,7 @@ function goEat() {
  * Update target coordinates for the closest goat mate
  */
 function findMate() {
-    this.targetCell = null;
+    this.targetGoat = null;
 
     var goat, distance, bestGoat = null, bestDistance = Math.MAX_VALUE;
     for (var i = 0; i < this.knownGoats.length; i++) {
