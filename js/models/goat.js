@@ -213,7 +213,11 @@ function findMate() {
     }
 
     if(bestGoat === null || bestGoat === undefined) {
-        this.goEat();
+        if(this.eatingDesire >= this.exploreDesire) {
+            this.goEat();
+        } else {
+            this.goExplore();
+        }
         return;
     }
 

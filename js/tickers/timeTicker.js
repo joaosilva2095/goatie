@@ -124,8 +124,8 @@ function updateGoatStats(elapsedTime, goat, goatCell) {
     // Update attributes
     goat.age += elapsedTime;
     goat.size = CHILD_GOAT_SIZE + (goat.age / MAXIMUM_GOAT_AGE) * (MAXIMUM_GOAT_SIZE - CHILD_GOAT_SIZE);
-    goat.hungrySpeed = MINIMUM_GOAT_HUNGRY_SPEED + goat.size / (MAXIMUM_GOAT_HUNGRY_SPEED - MINIMUM_GOAT_HUNGRY_SPEED);
-    goat.maximumFood = MINIMUM_GOAT_FOOD + goat.size / (MAXIMUM_GOAT_FOOD - MINIMUM_GOAT_FOOD);
+    goat.hungrySpeed = MINIMUM_GOAT_HUNGRY_SPEED + (goat.size / MAXIMUM_GOAT_SIZE) * (MAXIMUM_GOAT_HUNGRY_SPEED - MINIMUM_GOAT_HUNGRY_SPEED);
+    goat.maximumFood = MINIMUM_GOAT_FOOD + (goat.size / MAXIMUM_GOAT_SIZE) * (MAXIMUM_GOAT_FOOD - MINIMUM_GOAT_FOOD);
 
     if (goat.matingCooldown > 0) {
         goat.matingCooldown -= elapsedTime;

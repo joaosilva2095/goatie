@@ -38,11 +38,11 @@ var MINIMUM_GOAT_FOOD = 100; // Goat maximum food
 var MAXIMUM_GOAT_FOOD = 500; // Goat maximum food
 var FERTILE_GOAT_AGE = 100; // Fertile goat age
 var FEMALE_FERTILITY_COOLDOWN = 100; // Female cooldown before being fertile
-var MALE_FERTILITY_COOLDOWN = 0; // Male cooldown before being fertile
+var MALE_FERTILITY_COOLDOWN = 5; // Male cooldown before being fertile
 
 // Cells defaults
 var DEFAULT_PLAINS_SPEED_FACTOR = 1; // Goat speed multiplier
 var DEFAULT_WATER_SPEED_FACTOR = 2;
 var DEFAULT_MOUNTAIN_SPEED_FACTOR = 0.5;
-var BASE_GROWTH_FACTOR = 1; // Growth factor
+var BASE_GROWTH_FACTOR = 0.5; // Growth factor
 var CELL_MAXIMUM_FOOD = 250; // Maximum food units
