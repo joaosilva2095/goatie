@@ -27,6 +27,15 @@ function onLoad() {
     var timeTicker = new TimeTicker(world, view);
     window.requestAnimationFrame(timeTicker.updateEntities.bind(timeTicker));
 
+    // Configure the inputs
+    var simulatorSpeedInput = $('#simulatorSpeed');
+    simulatorSpeedInput.val(SIMULATION_SPEED);
+    simulatorSpeedInput.change(function () {
+        agentsTicker.stop();
+        SIMULATION_SPEED = $(this).val();
+        agentsTicker.start();
+    });
+
     console.log('Finished loading');
 }
 

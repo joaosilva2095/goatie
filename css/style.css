@@ -4,9 +4,33 @@ html, body {
     overflow: hidden;
 }
 
-#liveGoatsChart {
+#overlays {
     position: absolute;
     z-index: 2;
+}
+
+#overlays > #liveGoatsChart {
+    width: 250px;
+    height: 100px;
+}
+
+#overlays > * {
+    position: static;
+    display: block;
+}
+
+#overlays > input,
+#overlays > label {
+    color: black;
+    display: inline-block;
+}
+
+#overlays > input {
+    text-align: center;
+    width: 50px;
+    border: 0 lightblue;
+    border-radius: 0;
+    background-color: rgba(255, 255, 255, 0.5);
 }
 
 #board {

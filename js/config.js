@@ -9,7 +9,7 @@ var COLOR_MOUNTAIN_EMPTY = "#4d3423";
 var COLOR_MOUNTAIN_FULL = "#3c6c3c";
 
 // Board configurations
-var SIMULATION_SPEED = 5;
+var SIMULATION_SPEED = 1;
 var NUMBER_CELLS_FACTOR = 4;
 var GRID_THICKNESS = 0.2;
 var PENALTY_PROBABILITY = 0.9;
@@ -22,7 +22,7 @@ var CHART_MAXIMUM_POINTS = 100; // Maximum number of points
 var MALE = 'M';
 var FEMALE = 'F';
 var INITIAL_POPULATION_SIZE = 50;
-var TICK_TIME = 50; // Milliseconds per tick
+var TICK_TIME = 100; // Milliseconds per tick
 
 // Goats defaults
 var DEFAULT_GOAT_AGE = 50;
