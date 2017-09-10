@@ -47,10 +47,6 @@ function Goat(x, y, gender, age, food, speed, eatSpeed, hungrySpeed, maximumFood
  * Get the color of a goat
  */
 function getColor() {
-    if(this.id === 1) {
-        return "black";
-    }
-
     if (this.gender === MALE) {
         return COLOR_GOAT_MALE;
     } else if (this.gender === FEMALE) {
