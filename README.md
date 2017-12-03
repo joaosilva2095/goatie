@@ -1,0 +1,2 @@
+# goatie
+Goat population simulator
