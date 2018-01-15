@@ -18,15 +18,16 @@
 <body>
 
 <div id="overlays">
-    <div id="liveGoatsChart"></div>
+    <canvas id="liveGoatsChart" width="300px" height="100px"></canvas>
     <label for="simulatorSpeed">Speed:</label>
     <input id="simulatorSpeed" type="number"/>
 </div>
+
 <canvas id="board" width="0" height="0"></canvas>
 
-<!-- JQuery -->
-<script src="vendor/jquery.js"></script>
-<script src="vendor/canvasjs.js"></script>
+<!-- Vendor -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
 
 <!-- Models -->
 <script src="js/models/cell.js"></script>

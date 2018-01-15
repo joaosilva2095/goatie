@@ -12,7 +12,7 @@ function onLoad() {
     console.log(world);
 
     // Charts
-    var liveGoatsChart = createChart("liveGoatsChart", "", "", "", 250, 100, []);
+    var liveGoatsChart = createChart("liveGoatsChart", "Pop. Size", "", "", 250, 100, [{x: 0, y: INITIAL_POPULATION_SIZE}]);
 
     // View
     view = new View(world, liveGoatsChart);

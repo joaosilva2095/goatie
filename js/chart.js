@@ -1,3 +1,5 @@
+var dataPoints = [];
+
 /**
  * Create a line chart
  * @param id id of the canvas to draw the graphic
@@ -10,35 +12,38 @@
  * @returns Chart chart with the information given
  */
 function createChart(id, title, xAxis, yAxis, width, height, dataPoints) {
-    return new CanvasJS.Chart(document.getElementById(id), {
-        title: {
-            text: title
+    return new Chart(document.getElementById("liveGoatsChart"), {
+        type: 'scatter',
+        data: {
+            datasets: [{
+                label: title,
+                data: dataPoints,
+                borderColor: "orange",
+                pointBackgroundColor: "transparent",
+                pointBorderColor: "orange",
+                backgroundColor: "transparent",
+                showLine: true
+            }]
         },
-        axisX: {
-            title: xAxis
-        },
-        axisY: {
-            title: yAxis
-        },
-        data: [{
-            color: "black",
-            lineColor: "black",
-            type: "line",
-            lineThickness: 5,
-            dataPoints: dataPoints
-        }],
-        theme: "theme2",
-        backgroundColor: "transparent",
-        width: width,
-        height: height
+        options: {
+            animation: {
+                duration: 0 // general animation time
+            },
+            elements: {
+                line: {
+                    tension: 0 // disables bezier curves
+                }
+            }
+        }
     });
 }
 
 function addChartPoint(chart, dataPoint, maxDataPoints) {
-    var dataPoints = chart.options.data[0].dataPoints;
+    var dataPoints = chart.data.datasets[0].data;
     if(maxDataPoints && dataPoints.length >= maxDataPoints) {
         dataPoints.shift();
     }
 
     dataPoints.push(dataPoint);
+    chart.update();
 }
